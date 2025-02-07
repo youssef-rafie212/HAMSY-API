@@ -1,10 +1,9 @@
-﻿using Core.Enums;
-
-namespace Core.Domain.Entities
+﻿namespace Core.Domain.Entities
 {
     public class SymbolTable
     {
         public string Scope { get; set; } = string.Empty;
-        public Dictionary<string, SymbolTableNameType> Names { get; set; } = [];
+        // key for variable name, value for variable value (if its a function the value will be null).
+        public Dictionary<string, int?> Names { get; set; } = [];
     }
 }

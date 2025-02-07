@@ -6,5 +6,6 @@ namespace Core.DTO
     {
         public MemoryData Data { get; set; } = new();
         public List<string> Notes { get; set; } = [];
+        public List<string> Errors { get; set; } = [];
     }
 }
