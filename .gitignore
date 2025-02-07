@@ -1,0 +1,12 @@
+# Ignore Visual Studio and Rider files
+.vs
+.idea
+.suo
+.user
+.userosscache
+.sln.docstates
+.VC.db
+.VC.opendb
+.ncb
+.opendb
+.code-workspace
