@@ -6,6 +6,7 @@ namespace Core.ServiceContracts
     {
         LexicalResponseDto LexicalAnalysis(LexicalRequestDto lexicalRequestDto);
         SyntaxResponseDto SyntaxAnalysis(SyntaxRequestDto syntaxRequestDto);
+        SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto);
         SemanticResponseDto SemanticAnalysis(SemanticRequestDto semanticRequestDto);
         IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto);
         IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto);

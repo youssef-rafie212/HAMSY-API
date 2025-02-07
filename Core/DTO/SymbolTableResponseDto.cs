@@ -2,9 +2,9 @@
 
 namespace Core.DTO
 {
-    public class SyntaxResponseDto
+    public class SymbolTableResponseDto
     {
-        public TreeNode ParseTree { get; set; } = new();
+        public List<SymbolTable> SymbolTables { get; set; } = [];
         public List<string> Notes { get; set; } = [];
         public List<string> Errors { get; set; } = [];
     }

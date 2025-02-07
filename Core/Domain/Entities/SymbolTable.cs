@@ -1,8 +1,10 @@
-﻿namespace Core.Domain.Entities
+﻿using Core.Enums;
+
+namespace Core.Domain.Entities
 {
     public class SymbolTable
     {
         public string Scope { get; set; } = string.Empty;
-        public List<string> Names { get; set; } = [];
+        public Dictionary<string, SymbolTableNameType> Names { get; set; } = [];
     }
 }

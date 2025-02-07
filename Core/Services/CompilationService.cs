@@ -91,6 +91,11 @@ namespace Core.Services
             throw new NotImplementedException();
         }
 
+        public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
+        {
+            throw new NotImplementedException();
+        }
+
         public SyntaxResponseDto SyntaxAnalysis(SyntaxRequestDto syntaxRequestDto)
         {
             AntlrInputStream antlrInput = new(syntaxRequestDto.SourceCode);
@@ -112,7 +117,6 @@ namespace Core.Services
             return new()
             {
                 ParseTree = tree,
-                SymbolTables = [],
                 Notes = [],
                 Errors = syntaxErrorsListener.Errors,
             };
