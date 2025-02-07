@@ -1,9 +1,7 @@
 grammar HAMSY;
 
-// Entry point
 program : variableDeclaration* functionDefinition* mainFunction EOF ;
 
-// Function Definitions
 functionDefinition
     : 'int' IDENTIFIER '(' 'int' IDENTIFIER ',' 'int' IDENTIFIER ')' '{' statement* returnStatement '}' // Other functions
     ;
@@ -12,10 +10,8 @@ mainFunction
     : 'int' 'main' '(' ')' '{' statement* returnStatement '}' // Main function
     ;
 
-// Return Statement
 returnStatement : 'return' expression ';' ;
 
-// Statements
 statement
     : variableDeclaration
     | assignment
@@ -23,32 +19,26 @@ statement
     | ifStatement
     ;
 
-// Variable Declarations (Global or Local)
 variableDeclaration : 'int' IDENTIFIER '=' expression ';' ;
 
 assignment : IDENTIFIER '=' expression ';' ;
 
-// While Loop
 whileLoop : 'while' '(' condition ')' '{' statement* '}' ;
 
-// If-Else Statement
 ifStatement : 'if' '(' condition ')' '{' statement* '}' ( 'else' '{' statement* '}' )? ;
 
-// Expressions (Allows Single Operands, Binary Expressions, and Function Calls)
 expression 
     : operand                           
     | operand operator operand          
     | functionCall               
     ;
 
-// Function Calls
 functionCall : IDENTIFIER '(' expression ',' expression ')' ;
 
 operand : IDENTIFIER | INT ;
 
 operator : '+' | '-' | '*' | '/' | '%' ;
 
-// Conditions
 condition : operand comparisonOperator operand ;
 
 comparisonOperator : '>' | '<' | '>=' | '<=' | '==' | '!=' ;
