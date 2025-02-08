@@ -20,9 +20,12 @@ namespace Core.Helpers
                     Children = []
                 };
 
-                foreach (IParseTree n in ctx.children)
+                if (ctx.ChildCount > 0)
                 {
-                    createdNode.Children.Add(MapToParseTree(n));
+                    foreach (IParseTree n in ctx.children)
+                    {
+                        createdNode.Children.Add(MapToParseTree(n));
+                    }
                 }
 
                 return createdNode;

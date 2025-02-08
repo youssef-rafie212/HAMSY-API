@@ -93,7 +93,16 @@ namespace Core.Services
 
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
         {
-            throw new NotImplementedException();
+            SyntaxResponseDto syntaxResult = SyntaxAnalysis(new() { SourceCode = symbolTablesRequestDto.SourceCode });
+            SymbolTablesCreator symbolTablesCreator = new();
+            symbolTablesCreator.CreateTables(syntaxResult.ParseTree, null, null);
+
+            return new()
+            {
+                SymbolTables = symbolTablesCreator.Tables,
+                Notes = [], // TODO : notes
+                Errors = symbolTablesCreator.Errors
+            };
         }
 
         public SyntaxResponseDto SyntaxAnalysis(SyntaxRequestDto syntaxRequestDto)
@@ -117,7 +126,7 @@ namespace Core.Services
             return new()
             {
                 ParseTree = tree,
-                Notes = [],
+                Notes = [], // TODO: add notes for the syntax analysis phase
                 Errors = syntaxErrorsListener.Errors,
             };
         }

@@ -32,3 +32,4 @@ C:\Users\joe69\source\repos\HAMSY\HAMSY_API\obj\Debug\net8.0\refint\HAMSY_API.dl
 C:\Users\joe69\source\repos\HAMSY\HAMSY_API\obj\Debug\net8.0\HAMSY_API.pdb
 C:\Users\joe69\source\repos\HAMSY\HAMSY_API\obj\Debug\net8.0\HAMSY_API.genruntimeconfig.cache
 C:\Users\joe69\source\repos\HAMSY\HAMSY_API\obj\Debug\net8.0\ref\HAMSY_API.dll
+C:\Users\joe69\source\repos\HAMSY\HAMSY_API\obj\Debug\net8.0\HAMSY_API.sourcelink.json

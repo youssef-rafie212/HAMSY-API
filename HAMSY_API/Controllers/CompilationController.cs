@@ -28,5 +28,12 @@ namespace HAMSY_API.Controllers
             SyntaxResponseDto res = _compilationService.SyntaxAnalysis(req);
             return Ok(res);
         }
+
+        [HttpPost("symbol-tables")]
+        public IActionResult SymbolTables(SymbolTablesRequestDto req)
+        {
+            SymbolTableResponseDto res = _compilationService.SymbolTables(req);
+            return Ok(res);
+        }
     }
 }

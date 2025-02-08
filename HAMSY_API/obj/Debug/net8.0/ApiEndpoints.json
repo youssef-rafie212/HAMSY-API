@@ -17,6 +17,22 @@
   },
   {
     "ContainingType": "HAMSY_API.Controllers.CompilationController",
+    "Method": "SymbolTables",
+    "RelativePath": "api/Compilation/symbol-tables",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.SymbolTablesRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HAMSY_API.Controllers.CompilationController",
     "Method": "SyntaxAnalysis",
     "RelativePath": "api/Compilation/syntax-analysis",
     "HttpMethod": "POST",
