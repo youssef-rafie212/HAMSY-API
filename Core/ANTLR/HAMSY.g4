@@ -57,6 +57,7 @@ LBRACE: '{';
 RBRACE: '}';
 SEMI: ';';
 ASSIGN: '=';
+COMMA: ',';
 
 PLUS: '+';
 MINUS: '-';
