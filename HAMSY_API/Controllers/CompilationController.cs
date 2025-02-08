@@ -1,4 +1,5 @@
-﻿using Core.DTO;
+﻿using Core.Domain.Entities;
+using Core.DTO;
 using Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,24 @@ namespace HAMSY_API.Controllers
         public IActionResult SymbolTables(SymbolTablesRequestDto req)
         {
             SymbolTableResponseDto res = _compilationService.SymbolTables(req);
-            return Ok(res);
+
+            // Mapping SymbolTable to the simplified version.
+            List<SimplifiedSymbolTable> simplifiedSymbolTables = [];
+            foreach (SymbolTable s in res.SymbolTables)
+            {
+                simplifiedSymbolTables.Add(new()
+                {
+                    Scope = s.Scope,
+                    Names = s.Names,
+                });
+            }
+
+            return Ok(new
+            {
+                SymbolTables = simplifiedSymbolTables,
+                res.Notes,
+                res.Errors
+            });
         }
     }
 }
