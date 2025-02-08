@@ -11,29 +11,39 @@ namespace Core.Helpers
         private int _ifScopeCounter = 0;
         private int _whileScopeCounter = 0;
 
+        public SymbolTablesCreator()
+        {
+            // Initialzing the global symbol table as it always exists.
+            Tables.Add(new SymbolTable()
+            {
+                Scope = "global",
+                Names = [],
+                Parent = null,
+            });
+        }
+
         // Creates a symbol table for each scope and handles errors as well.
         public void CreateTables(TreeNode node, SymbolTable? scope, TreeNode? prevSibling)
         {
-            // Create a global scope
+            // Handle the global scope
             if (node.Type == TreeNodeType.Program.ToString())
             {
-                SymbolTable globalScopeTable = new()
-                {
-                    Names = [],
-                    Scope = "global",
-                    Parent = scope,
-                };
+                // No need to create a new symbol table as it gets initialized in the constructor.
+                SymbolTable globalScopeTable = Tables[0];
+
                 for (int i = 0; i < node.Children.Count; i++)
                 {
                     CreateTables(node.Children[i], globalScopeTable, i == 0 ? null : node.Children[i - 1]);
                 }
-                Tables.Add(globalScopeTable);
             }
 
             // Create a function scope
             else if (node.Type == TreeNodeType.FunctionDefinition.ToString() || node.Type == TreeNodeType.MainFunction.ToString())
             {
                 string functionName = node.Children[1].Value;
+                // Add function name to the global scope (because we can only define functions in the global scopes).
+                Tables[0].Names.Add(functionName);
+
                 SymbolTable functionScopeTable = new()
                 {
                     Names = [],
@@ -43,6 +53,7 @@ namespace Core.Helpers
 
                 for (int i = 0; i < node.Children.Count; i++)
                 {
+                    if (i == 1) continue; // Skip adding the function name because we added it to the global scope already.
                     CreateTables(node.Children[i], functionScopeTable, i == 0 ? null : node.Children[i - 1]);
                 }
                 Tables.Add(functionScopeTable);
