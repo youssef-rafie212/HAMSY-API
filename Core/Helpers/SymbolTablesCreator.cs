@@ -11,8 +11,10 @@ namespace Core.Helpers
         private int _ifScopeCounter = 0;
         private int _whileScopeCounter = 0;
 
+        // Creates a symbol table for each scope and handles errors as well.
         public void CreateTables(TreeNode node, SymbolTable? scope, TreeNode? prevSibling)
         {
+            // Create a global scope
             if (node.Type == TreeNodeType.Program.ToString())
             {
                 SymbolTable globalScopeTable = new()
@@ -27,6 +29,8 @@ namespace Core.Helpers
                 }
                 Tables.Add(globalScopeTable);
             }
+
+            // Create a function scope
             else if (node.Type == TreeNodeType.FunctionDefinition.ToString() || node.Type == TreeNodeType.MainFunction.ToString())
             {
                 string functionName = node.Children[1].Value;
@@ -43,6 +47,8 @@ namespace Core.Helpers
                 }
                 Tables.Add(functionScopeTable);
             }
+
+            // Create if statement scope
             else if (node.Type == TreeNodeType.IfStatement.ToString())
             {
                 _ifScopeCounter++;
@@ -58,6 +64,8 @@ namespace Core.Helpers
                 }
                 Tables.Add(ifScopeTable);
             }
+
+            // Create while statement scope
             else if (node.Type == TreeNodeType.WhileLoop.ToString())
             {
                 _whileScopeCounter++;
@@ -73,6 +81,8 @@ namespace Core.Helpers
                 }
                 Tables.Add(whileScopeTable);
             }
+
+            // Handle names
             else if (node.Type == TreeNodeType.Terminal.ToString())
             {
                 List<string> keywords = ["int", "return", "if", "while"];
@@ -104,6 +114,7 @@ namespace Core.Helpers
                     }
                 }
             }
+            // If not a scope maker or an identifier we just skip to the children of the node.
             else
             {
                 for (int i = 0; i < node.Children.Count; i++)

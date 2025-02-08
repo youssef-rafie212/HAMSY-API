@@ -94,6 +94,7 @@ namespace Core.Services
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
         {
             SyntaxResponseDto syntaxResult = SyntaxAnalysis(new() { SourceCode = symbolTablesRequestDto.SourceCode });
+
             SymbolTablesCreator symbolTablesCreator = new();
             symbolTablesCreator.CreateTables(syntaxResult.ParseTree, null, null);
 
