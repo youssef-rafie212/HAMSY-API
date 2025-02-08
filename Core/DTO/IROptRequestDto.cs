@@ -5,6 +5,6 @@ namespace Core.DTO
     public class IROptRequestDto
     {
         [Required]
-        public string IR { get; set; } = string.Empty;
+        public string IR { get; set; }
     }
 }

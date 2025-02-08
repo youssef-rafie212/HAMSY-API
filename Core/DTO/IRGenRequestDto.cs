@@ -6,6 +6,6 @@ namespace Core.DTO
     public class IRGenRequestDto
     {
         [Required]
-        public TreeNode AST { get; set; } = new();
+        public TreeNode AST { get; set; }
     }
 }

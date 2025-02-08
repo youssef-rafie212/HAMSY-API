@@ -40,9 +40,6 @@ namespace Core.Services
             lexer.AddErrorListener(lexicalErrorsListener);
             IList<IToken> antlrTokens = lexer.GetAllTokens();
 
-            // Keeping track of how many tokens of each type we got to add to the notes field.
-            Dictionary<string, int> tokenCounts = [];
-
             // Mapping ANTLR tokens to our tokens.
             List<Token> tokens = [];
             foreach (IToken t in antlrTokens)
@@ -56,27 +53,11 @@ namespace Core.Services
                     Column = t.Column,
                 };
                 tokens.Add(token);
-
-                if (tokenCounts.ContainsKey(tokenType))
-                {
-                    tokenCounts[tokenType]++;
-                }
-                else
-                {
-                    tokenCounts.Add(tokenType, 1);
-                }
-            }
-
-            List<string> notes = [];
-            foreach (var entry in tokenCounts)
-            {
-                notes.Add($"Extracted {entry.Value} '{entry.Key}' token(s).");
             }
 
             return new()
             {
                 Tokens = tokens,
-                Notes = notes,
                 Errors = lexicalErrorsListener.Errors,
             };
         }
@@ -93,15 +74,12 @@ namespace Core.Services
 
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
         {
-            SyntaxResponseDto syntaxResult = SyntaxAnalysis(new() { SourceCode = symbolTablesRequestDto.SourceCode });
-
             SymbolTablesCreator symbolTablesCreator = new();
-            symbolTablesCreator.CreateTables(syntaxResult.ParseTree, null, null);
+            symbolTablesCreator.CreateTables(symbolTablesRequestDto.ParseTree, null, null);
 
             return new()
             {
                 SymbolTables = symbolTablesCreator.Tables,
-                Notes = [], // TODO : notes
                 Errors = symbolTablesCreator.Errors
             };
         }
@@ -127,7 +105,6 @@ namespace Core.Services
             return new()
             {
                 ParseTree = tree,
-                Notes = [], // TODO: add notes for the syntax analysis phase
                 Errors = syntaxErrorsListener.Errors,
             };
         }

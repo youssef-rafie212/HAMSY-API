@@ -49,7 +49,6 @@ namespace HAMSY_API.Controllers
             return Ok(new
             {
                 SymbolTables = simplifiedSymbolTables,
-                res.Notes,
                 res.Errors
             });
         }

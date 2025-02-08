@@ -5,6 +5,6 @@ namespace Core.DTO
     public class LexicalRequestDto
     {
         [Required]
-        public string SourceCode { get; set; } = string.Empty;
+        public string SourceCode { get; set; }
     }
 }

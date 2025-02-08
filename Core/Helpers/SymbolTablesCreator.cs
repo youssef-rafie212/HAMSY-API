@@ -118,7 +118,7 @@ namespace Core.Helpers
                     // Usage
                     else
                     {
-                        if (!IsDeclared(node.Value, scope))
+                        if (!IsDeclared(node.Value, scope!))
                         {
                             Errors.Add($"VARIABLE USAGE ERROR, the name '{node.Value}' is used but not declared in usage scope or its parent scopes.");
                         }
@@ -135,13 +135,11 @@ namespace Core.Helpers
             }
         }
 
-        private bool IsDeclared(string name, SymbolTable? scope)
+        private bool IsDeclared(string name, SymbolTable scope)
         {
-            if (scope == null) return false;
-
             if (scope.Names.Contains(name)) return true;
 
-            return IsDeclared(name, scope.Parent);
+            return IsDeclared(name, scope.Parent!);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Core.DTO
     public class InsSchedRequestDto
     {
         [Required]
-        public string Assembly { get; set; } = string.Empty;
+        public string Assembly { get; set; }
     }
 }

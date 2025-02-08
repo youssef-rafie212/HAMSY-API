@@ -5,7 +5,6 @@ namespace Core.DTO
     public class SyntaxResponseDto
     {
         public TreeNode ParseTree { get; set; } = new();
-        public List<string> Notes { get; set; } = [];
         public List<string> Errors { get; set; } = [];
     }
 }

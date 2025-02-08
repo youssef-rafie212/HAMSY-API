@@ -5,6 +5,6 @@ namespace Core.DTO
     public class OCRRequestDto
     {
         [Required]
-        public byte[] SourceCodeImage { get; set; } = [];
+        public byte[] SourceCodeImage { get; set; }
     }
 }
