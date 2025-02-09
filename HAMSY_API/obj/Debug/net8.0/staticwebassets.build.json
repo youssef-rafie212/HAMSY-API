@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "CGIabAc10FKh1siYvKTra3w0HD3/NZE2GqmOJmSxR7o=",
+  "Hash": "YNjnRGU8VO0BBiv4oqOUkmNOfHhi2ig1Wr7q7T0oBsI=",
   "Source": "HAMSY_API",
   "BasePath": "_content/HAMSY_API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "HAMSY_API\\wwwroot",
+      "Source": "HAMSY_API",
+      "ContentRoot": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\",
+      "BasePath": "_content/HAMSY_API",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [],
   "Endpoints": []
 }

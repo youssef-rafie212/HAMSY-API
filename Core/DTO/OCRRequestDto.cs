@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.DTO
 {
     public class OCRRequestDto
     {
         [Required]
-        public byte[] SourceCodeImage { get; set; }
+        public IFormFile SourceCodeImage { get; set; }
     }
 }
