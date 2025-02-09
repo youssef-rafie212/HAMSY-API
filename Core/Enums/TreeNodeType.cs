@@ -12,6 +12,7 @@
         Assignment,
         WhileLoop,
         IfStatement,
+        ElseStatement,
         Expression,
         FunctionCall,
         Operand,

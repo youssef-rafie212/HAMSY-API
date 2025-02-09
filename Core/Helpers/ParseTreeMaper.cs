@@ -56,6 +56,7 @@ namespace Core.Helpers
                 case HAMSYParser.RULE_assignment: return TreeNodeType.Assignment;
                 case HAMSYParser.RULE_whileLoop: return TreeNodeType.WhileLoop;
                 case HAMSYParser.RULE_ifStatement: return TreeNodeType.IfStatement;
+                case HAMSYParser.RULE_elseStatement: return TreeNodeType.ElseStatement;
                 case HAMSYParser.RULE_expression: return TreeNodeType.Expression;
                 case HAMSYParser.RULE_functionCall: return TreeNodeType.FunctionCall;
                 case HAMSYParser.RULE_operand: return TreeNodeType.Operand;

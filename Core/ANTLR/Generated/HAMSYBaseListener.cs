@@ -144,6 +144,18 @@ public partial class HAMSYBaseListener : IHAMSYListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIfStatement([NotNull] HAMSYParser.IfStatementContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HAMSYParser.elseStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterElseStatement([NotNull] HAMSYParser.ElseStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HAMSYParser.elseStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitElseStatement([NotNull] HAMSYParser.ElseStatementContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HAMSYParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

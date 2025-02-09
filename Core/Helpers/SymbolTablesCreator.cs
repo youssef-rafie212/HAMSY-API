@@ -9,6 +9,7 @@ namespace Core.Helpers
         public List<SymbolTable> Tables = [];
         public List<string> Errors = [];
         private int _ifScopeCounter = 0;
+        private int _elseScopeCounter = 0;
         private int _whileScopeCounter = 0;
 
         public SymbolTablesCreator()
@@ -76,6 +77,23 @@ namespace Core.Helpers
                 Tables.Add(ifScopeTable);
             }
 
+            // Create else statement scope
+            else if (node.Type == TreeNodeType.ElseStatement.ToString())
+            {
+                _elseScopeCounter++;
+                SymbolTable elseScopeTable = new()
+                {
+                    Names = [],
+                    Scope = $"else statement {_elseScopeCounter}",
+                    Parent = scope,
+                };
+                for (int i = 0; i < node.Children.Count; i++)
+                {
+                    CreateTables(node.Children[i], elseScopeTable, i == 0 ? null : node.Children[i - 1]);
+                }
+                Tables.Add(elseScopeTable);
+            }
+
             // Create while statement scope
             else if (node.Type == TreeNodeType.WhileLoop.ToString())
             {
@@ -96,7 +114,7 @@ namespace Core.Helpers
             // Handle names
             else if (node.Type == TreeNodeType.Terminal.ToString())
             {
-                List<string> keywords = ["int", "return", "if", "while"];
+                List<string> keywords = ["int", "return", "if", "else", "while"];
                 Regex idRegex = new(@"^[a-zA-Z_][a-zA-Z0-9_]*$");
 
                 // Identifier

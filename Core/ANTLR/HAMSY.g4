@@ -25,7 +25,9 @@ assignment : IDENTIFIER '=' expression ';' ;
 
 whileLoop : 'while' '(' condition ')' '{' statement* '}' ;
 
-ifStatement : 'if' '(' condition ')' '{' statement* '}' ( 'else' '{' statement* '}' )? ;
+ifStatement : 'if' '(' condition ')' '{' statement* '}' ( elseStatement )? ;
+
+elseStatement : 'else' '{' statement* '}' ;
 
 expression 
     : operand                           

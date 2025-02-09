@@ -121,6 +121,16 @@ public interface IHAMSYListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitIfStatement([NotNull] HAMSYParser.IfStatementContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HAMSYParser.elseStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterElseStatement([NotNull] HAMSYParser.ElseStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HAMSYParser.elseStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitElseStatement([NotNull] HAMSYParser.ElseStatementContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HAMSYParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
