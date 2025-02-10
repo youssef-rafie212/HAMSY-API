@@ -4,7 +4,7 @@ namespace Core.DTO
 {
     public class MemoryResponseDto
     {
-        public MemoryData Data { get; set; } = new();
+        public List<ExecutionStep> ExecutionSteps { get; set; } = [];
         public List<string> Errors { get; set; } = [];
     }
 }

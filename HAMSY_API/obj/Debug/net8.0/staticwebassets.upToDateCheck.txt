@@ -1,0 +1,1 @@
+wwwroot\Uploads\test.png

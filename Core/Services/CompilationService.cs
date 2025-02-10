@@ -75,7 +75,7 @@ namespace Core.Services
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
         {
             SymbolTablesCreator symbolTablesCreator = new();
-            symbolTablesCreator.CreateTables(symbolTablesRequestDto.ParseTree, null, null);
+            symbolTablesCreator.CreateTables(symbolTablesRequestDto.ParseTree, null, null, null);
 
             return new()
             {

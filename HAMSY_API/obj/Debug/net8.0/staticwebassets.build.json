@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YNjnRGU8VO0BBiv4oqOUkmNOfHhi2ig1Wr7q7T0oBsI=",
+  "Hash": "70gMj5nQ1i0J969/5C78kcBLOCCmtckTLC3o2Dd129I=",
   "Source": "HAMSY_API",
   "BasePath": "_content/HAMSY_API",
   "Mode": "Default",
@@ -15,6 +15,111 @@
       "Pattern": "**"
     }
   ],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "SourceId": "HAMSY_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\",
+      "BasePath": "_content/HAMSY_API",
+      "RelativePath": "Uploads/test#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "74je0wfbi6",
+      "Integrity": "uXf4WFjmDQXsI/T1DDe3vskKAiZrkEvcrJxtGvQbHEk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\test.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "Uploads/test.74je0wfbi6.png",
+      "AssetFile": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9235"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uXf4WFjmDQXsI/T1DDe3vskKAiZrkEvcrJxtGvQbHEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Feb 2025 12:43:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "74je0wfbi6"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/test.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-uXf4WFjmDQXsI/T1DDe3vskKAiZrkEvcrJxtGvQbHEk="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/test.png",
+      "AssetFile": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9235"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uXf4WFjmDQXsI/T1DDe3vskKAiZrkEvcrJxtGvQbHEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Feb 2025 12:43:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-uXf4WFjmDQXsI/T1DDe3vskKAiZrkEvcrJxtGvQbHEk="
+        }
+      ]
+    }
+  ]
 }

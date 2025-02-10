@@ -24,7 +24,7 @@ namespace Core.Helpers
         }
 
         // Creates a symbol table for each scope and handles errors as well.
-        public void CreateTables(TreeNode node, SymbolTable? scope, TreeNode? prevSibling)
+        public void CreateTables(TreeNode node, SymbolTable? scope, TreeNode? prevSibling, string? currentFunction)
         {
             // Handle the global scope
             if (node.Type == TreeNodeType.Program.ToString())
@@ -34,7 +34,7 @@ namespace Core.Helpers
 
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], globalScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], globalScopeTable, i == 0 ? null : node.Children[i - 1], null);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace Core.Helpers
             {
                 string functionName = node.Children[1].Value;
                 // Add function name to the global scope (because we can only define functions in the global scopes).
-                Tables[0].Names.Add(functionName);
+                Tables[0].Names.Add(functionName, "function");
 
                 SymbolTable functionScopeTable = new()
                 {
@@ -55,7 +55,7 @@ namespace Core.Helpers
                 for (int i = 0; i < node.Children.Count; i++)
                 {
                     if (i == 1) continue; // Skip adding the function name because we added it to the global scope already.
-                    CreateTables(node.Children[i], functionScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], functionScopeTable, i == 0 ? null : node.Children[i - 1], functionName);
                 }
                 Tables.Add(functionScopeTable);
             }
@@ -67,12 +67,12 @@ namespace Core.Helpers
                 SymbolTable ifScopeTable = new()
                 {
                     Names = [],
-                    Scope = $"if statement {_ifScopeCounter}",
+                    Scope = $"if statement {_ifScopeCounter} in function {currentFunction}",
                     Parent = scope,
                 };
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], ifScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], ifScopeTable, i == 0 ? null : node.Children[i - 1], currentFunction);
                 }
                 Tables.Add(ifScopeTable);
             }
@@ -84,12 +84,12 @@ namespace Core.Helpers
                 SymbolTable elseScopeTable = new()
                 {
                     Names = [],
-                    Scope = $"else statement {_elseScopeCounter}",
+                    Scope = $"else statement {_elseScopeCounter} in function {currentFunction}",
                     Parent = scope,
                 };
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], elseScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], elseScopeTable, i == 0 ? null : node.Children[i - 1], currentFunction);
                 }
                 Tables.Add(elseScopeTable);
             }
@@ -101,12 +101,12 @@ namespace Core.Helpers
                 SymbolTable whileScopeTable = new()
                 {
                     Names = [],
-                    Scope = $"while loop {_whileScopeCounter}",
+                    Scope = $"while loop {_whileScopeCounter} in function {currentFunction}",
                     Parent = scope,
                 };
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], whileScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], whileScopeTable, i == 0 ? null : node.Children[i - 1], currentFunction);
                 }
                 Tables.Add(whileScopeTable);
             }
@@ -124,13 +124,13 @@ namespace Core.Helpers
                     if (prevSibling != null && prevSibling.Value == "int")
                     {
                         // Check if the name already exists in current scope.
-                        if (scope!.Names.Contains(node.Value))
+                        if (scope!.Names.ContainsKey(node.Value))
                         {
                             Errors.Add($"DECLARATION ERROR, name: '{node.Value}' already exists in the {scope.Scope} scope.");
                         }
                         else
                         {
-                            scope.Names.Add(node.Value);
+                            scope.Names.Add(node.Value, "variable");
                         }
                     }
                     // Usage
@@ -148,14 +148,14 @@ namespace Core.Helpers
             {
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], scope, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], scope, i == 0 ? null : node.Children[i - 1], currentFunction);
                 }
             }
         }
 
         private bool IsDeclared(string name, SymbolTable scope)
         {
-            if (scope.Names.Contains(name)) return true;
+            if (scope.Names.ContainsKey(name)) return true;
 
             return IsDeclared(name, scope.Parent!);
         }

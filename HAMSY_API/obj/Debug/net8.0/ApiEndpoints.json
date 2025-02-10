@@ -48,6 +48,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HAMSY_API.Controllers.MemoryAnalysisController",
+    "Method": "Analyze",
+    "RelativePath": "api/memory-analysis/Analyze",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.MemoryRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HAMSY_API.Controllers.OCRController",
     "Method": "ExtractCode",
     "RelativePath": "api/OCR/extract-code",

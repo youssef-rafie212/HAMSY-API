@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HAMSY_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+59b697af454803243afe4d1f83b83824a8fb2559")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d21d0f0a1192ffc3a6eeba8281f6bae40a639eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("HAMSY_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HAMSY_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

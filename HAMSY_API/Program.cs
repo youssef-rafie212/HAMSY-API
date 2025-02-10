@@ -12,6 +12,7 @@ namespace HAMSY_API
             builder.Services.AddControllers();
             builder.Services.AddScoped<ICompilationService, CompilationService>();
             builder.Services.AddScoped<IOCRService, OCRService>();
+            builder.Services.AddScoped<IMemoryAnalysisService, MemoryAnalysisService>();
 
             var app = builder.Build();
 
