@@ -21,7 +21,7 @@ namespace Core.Helpers
         public void Analyze()
         {
             GlobalVariables();
-            HandleFunctionCalls();
+            ExecuteFunction("main");
         }
 
         private void GlobalVariables()
@@ -44,38 +44,30 @@ namespace Core.Helpers
             }
         }
 
-        // Search for function calls
-        private void HandleFunctionCalls()
+        private void ExecuteFunction(string functionName)
         {
-            List<string> functions = ["main"];
-            int prevNumberOfFunctions = 0;
+            AddFunctionCall(functionName);
 
-            while (functions.Count > prevNumberOfFunctions)
+            List<string> innerFunctionCalls = GetFunctionCalls(functionName);
+
+            if (innerFunctionCalls.Count > 0)
             {
-                prevNumberOfFunctions++;
-                string funcName = functions.Last();
-
-                AddFunctionCall(funcName);
-
-                string? innerFunctionCall = GetFunctionCall(funcName);
-
-                if (innerFunctionCall != null)
+                foreach (string call in innerFunctionCalls)
                 {
-                    functions.Add(innerFunctionCall);
+                    if (call != functionName)
+                    {
+                        ExecuteFunction(call);
+                    }
                 }
             }
 
-            functions.Reverse();
-            foreach (string name in functions)
-            {
-                RemoveFunctionCall(name);
-            }
+            RemoveFunctionCall(functionName);
         }
 
-        private string? GetFunctionCall(string functionName)
+        private List<string> GetFunctionCalls(string functionName)
         {
             TreeNode node = TraverseTo(functionName, ParseTree)!;
-            return SearchForCall(node);
+            return SearchForCall(node, []);
         }
 
         private TreeNode? TraverseTo(string functionName, TreeNode startNode)
@@ -97,25 +89,27 @@ namespace Core.Helpers
             return null;
         }
 
-        private string? SearchForCall(TreeNode node)
+        private List<string> SearchForCall(TreeNode node, List<string> callsFound)
         {
             if (node.Type == TreeNodeType.FunctionCall.ToString())
             {
-                return node.Children[0].Value;
+                callsFound.Add(node.Children[0].Value);
+                return callsFound;
             }
 
             foreach (TreeNode child in node.Children)
             {
-                string? res = SearchForCall(child);
-                if (res != null)
+                List<string> res = SearchForCall(child, callsFound);
+                foreach (string name in res)
                 {
-                    return res;
+                    if (!callsFound.Contains(name))
+                    {
+                        callsFound.Add(name);
+                    }
                 }
-                continue;
-
             }
 
-            return null;
+            return callsFound;
         }
 
         private void AddFunctionCall(string functionName)
