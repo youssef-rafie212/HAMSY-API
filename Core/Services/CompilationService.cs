@@ -69,7 +69,10 @@ namespace Core.Services
 
         public SemanticResponseDto SemanticAnalysis(SemanticRequestDto semanticRequestDto)
         {
-            throw new NotImplementedException();
+            return new()
+            {
+                AST = ASTMapper.MapFromParseTree(semanticRequestDto.ParseTree)
+            };
         }
 
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
