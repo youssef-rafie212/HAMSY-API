@@ -86,6 +86,7 @@ namespace Core.LLVM
             }
             else
             {
+
                 LLVMValueRef variablePointer = GetPointerFromTable(node.Value);
                 return _builder.BuildLoad2(LLVMTypeRef.Int32, variablePointer);
             }
