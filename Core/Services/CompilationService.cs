@@ -3,6 +3,7 @@ using Core.ANTLR.ErrorListeners;
 using Core.Domain.Entities;
 using Core.DTO;
 using Core.Helpers;
+using Core.LLVM;
 using Core.ServiceContracts;
 
 namespace Core.Services
@@ -21,7 +22,12 @@ namespace Core.Services
 
         public IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto)
         {
-            throw new NotImplementedException();
+            LLVMIRGenerator generator = new("HAMSY");
+            generator.Traverse(irGenRequestDto.AST);
+            return new()
+            {
+                IR = generator.GetIR()
+            };
         }
 
         public IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto)

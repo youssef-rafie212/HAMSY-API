@@ -62,7 +62,7 @@ namespace Core.Helpers
             {
                 TreeNode newNode = new() { Type = parseTree.Type, Value = parseTree.Value };
                 newNode.Children.Add(MapFromParseTree(parseTree.Children[2]));
-                for (int i = 5; i < parseTree.Children.Count; i++)
+                for (int i = 5; i < parseTree.Children.Count - 1; i++)
                 {
                     newNode.Children.Add(MapFromParseTree(parseTree.Children[i]));
                 }

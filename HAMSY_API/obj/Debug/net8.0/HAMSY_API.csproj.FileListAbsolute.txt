@@ -39,3 +39,5 @@ C:\Users\joe69\source\repos\HAMSY\HAMSY_API\bin\Debug\net8.0\x64\leptonica-1.82.
 C:\Users\joe69\source\repos\HAMSY\HAMSY_API\bin\Debug\net8.0\x64\tesseract50.dll
 C:\Users\joe69\source\repos\HAMSY\HAMSY_API\bin\Debug\net8.0\HAMSY_API.staticwebassets.runtime.json
 C:\Users\joe69\source\repos\HAMSY\HAMSY_API\bin\Debug\net8.0\Tesseract.dll
+C:\Users\joe69\source\repos\HAMSY\HAMSY_API\bin\Debug\net8.0\LLVMSharp.dll
+C:\Users\joe69\source\repos\HAMSY\HAMSY_API\bin\Debug\net8.0\LLVMSharp.Interop.dll
