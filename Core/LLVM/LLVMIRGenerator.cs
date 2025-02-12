@@ -9,16 +9,16 @@ namespace Core.LLVM
         private LLVMContextRef _context;
         private LLVMModuleRef _module;
         private LLVMBuilderRef _builder;
-        private Dictionary<string, LLVMValueRef> _declaredNames = [];
-        private Dictionary<string, LLVMValueRef> _globalNames = [];
+        private List<SymbolTable> _symbolTables;
         private Dictionary<string, LLVMTypeRef> _functionTypes = [];
         private LLVMValueRef _currentFunction;
 
-        public LLVMIRGenerator(string moduleName)
+        public LLVMIRGenerator(string moduleName, List<SymbolTable> symbolTables)
         {
             _context = LLVMContextRef.Create();
             _module = _context.CreateModuleWithName(moduleName);
             _builder = _context.CreateBuilder();
+            _symbolTables = symbolTables;
         }
 
         public LLVMValueRef Traverse(TreeNode node)
@@ -86,7 +86,7 @@ namespace Core.LLVM
             }
             else
             {
-                LLVMValueRef variablePointer = _declaredNames[node.Value];
+                LLVMValueRef variablePointer = GetPointerFromTable(node.Value);
                 return _builder.BuildLoad2(LLVMTypeRef.Int32, variablePointer);
             }
         }
@@ -139,15 +139,18 @@ namespace Core.LLVM
             {
                 LLVMValueRef globalVar = _module.AddGlobal(LLVMTypeRef.Int32, name);
                 globalVar.Initializer = value;
-                _declaredNames[name] = globalVar;
-                _globalNames[name] = globalVar;
+                _symbolTables[0].Names[name] = globalVar;
                 return globalVar;
             }
             else
             {
                 LLVMValueRef alloca = CreateAllocaEntry(_currentFunction, name);
                 _builder.BuildStore(value, alloca);
-                _declaredNames[name] = alloca;
+                SymbolTable symbolTable = _symbolTables.Find(s =>
+                {
+                    return s.Scope.Split(' ').Last() == _currentFunction.Name;
+                })!;
+                symbolTable.Names[name] = alloca;
                 return alloca;
             }
         }
@@ -155,11 +158,32 @@ namespace Core.LLVM
         private LLVMValueRef GenerateAssignment(TreeNode node)
         {
             string name = node.Children[0].Value;
-            LLVMValueRef variableAllocatedSpace = _declaredNames[name]; // 
+
+            LLVMValueRef variableAllocatedSpace = GetPointerFromTable(name);
 
             LLVMValueRef value = Traverse(node.Children[1]);
 
             return _builder.BuildStore(value, variableAllocatedSpace);
+        }
+
+        private LLVMValueRef GetPointerFromTable(string varName)
+        {
+            LLVMValueRef variableAllocatedSpace = default;
+            bool found = false;
+            if (_currentFunction.Handle != IntPtr.Zero)
+            {
+                SymbolTable symbolTable = _symbolTables.Find(s =>
+                {
+                    return s.Scope.Split(' ').Last() == _currentFunction.Name;
+                })!;
+                found = symbolTable.Names.TryGetValue(varName, out variableAllocatedSpace);
+            }
+
+            if (!found || variableAllocatedSpace == null)
+            {
+                variableAllocatedSpace = _symbolTables[0].Names[varName];
+            }
+            return variableAllocatedSpace;
         }
 
         private LLVMValueRef GenerateCondition(TreeNode node)
@@ -247,7 +271,7 @@ namespace Core.LLVM
 
             _builder.PositionAtEnd(mergeBB);
 
-            return LLVMValueRef.CreateConstInt(LLVMTypeRef.Int32, 0, false);
+            return default;
         }
 
         private LLVMValueRef GenerateWhileLoop(TreeNode node)
@@ -275,7 +299,7 @@ namespace Core.LLVM
 
             _builder.PositionAtEnd(endBB);
 
-            return LLVMValueRef.CreateConstInt(LLVMTypeRef.Int32, 0, false);
+            return default;
         }
 
         private LLVMValueRef GenerateFunction(TreeNode node)
@@ -313,8 +337,12 @@ namespace Core.LLVM
                 _builder.BuildStore(param0, allocaParam0);
                 _builder.BuildStore(param1, allocaParam1);
 
-                _declaredNames[node.Children[1].Value] = allocaParam0;
-                _declaredNames[node.Children[2].Value] = allocaParam1;
+                SymbolTable symbolTable = _symbolTables.Find(s =>
+                {
+                    return s.Scope.Split(' ').Last() == _currentFunction.Name;
+                })!;
+                symbolTable.Names[node.Children[1].Value] = allocaParam0;
+                symbolTable.Names[node.Children[2].Value] = allocaParam1;
             }
 
             int bodyStartIndx = (node.Type == TreeNodeType.MainFunction.ToString()) ? 1 : 3;

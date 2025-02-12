@@ -22,7 +22,8 @@ namespace Core.Services
 
         public IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto)
         {
-            LLVMIRGenerator generator = new("HAMSY");
+            SymbolTableResponseDto symbolTables = SymbolTables(new() { ParseTree = irGenRequestDto.ParseTree });
+            LLVMIRGenerator generator = new("HAMSY", symbolTables.SymbolTables);
             generator.Traverse(irGenRequestDto.AST);
             return new()
             {
