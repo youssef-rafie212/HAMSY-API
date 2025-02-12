@@ -42,7 +42,7 @@ namespace HAMSY_API.Controllers
                 simplifiedSymbolTables.Add(new()
                 {
                     Scope = s.Scope,
-                    Names = s.Names,
+                    Names = s.NamesTypes,
                 });
             }
 

@@ -2,7 +2,6 @@
 using Core.Enums;
 using LLVMSharp.Interop;
 
-// TODO: integrate symbol table for better scope handling.
 namespace Core.LLVM
 {
     public class LLVMIRGenerator
@@ -156,7 +155,7 @@ namespace Core.LLVM
         private LLVMValueRef GenerateAssignment(TreeNode node)
         {
             string name = node.Children[0].Value;
-            LLVMValueRef variableAllocatedSpace = _declaredNames[name];
+            LLVMValueRef variableAllocatedSpace = _declaredNames[name]; // 
 
             LLVMValueRef value = Traverse(node.Children[1]);
 
@@ -281,21 +280,6 @@ namespace Core.LLVM
 
         private LLVMValueRef GenerateFunction(TreeNode node)
         {
-            List<string> keysToRemove = [];
-
-            foreach (var entry in _declaredNames)
-            {
-                if (!_globalNames.ContainsKey(entry.Key))
-                {
-                    keysToRemove.Add(entry.Key);
-                }
-            }
-
-            foreach (string k in keysToRemove)
-            {
-                _declaredNames.Remove(k);
-            }
-
             string functionName = node.Children[0].Value;
             LLVMTypeRef functionType;
             int numParams;

@@ -30,7 +30,7 @@ namespace Core.Helpers
 
             if (globalScope.Names.Count > 0)
             {
-                foreach (var entry in globalScope.Names)
+                foreach (var entry in globalScope.NamesTypes)
                 {
                     if (entry.Value == "variable")
                     {
