@@ -7,7 +7,5 @@ namespace Core.DTO
     {
         [Required]
         public TreeNode AST { get; set; }
-        [Required]
-        public TreeNode ParseTree { get; set; }
     }
 }
