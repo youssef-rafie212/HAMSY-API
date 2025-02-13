@@ -23,6 +23,29 @@
           }
         }
       },
+      "libLLVM/16.0.6": {},
+      "LLVMSharp/16.0.0": {
+        "dependencies": {
+          "LLVMSharp.Interop": "16.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/LLVMSharp.dll": {
+            "assemblyVersion": "16.0.0.0",
+            "fileVersion": "16.0.0.0"
+          }
+        }
+      },
+      "LLVMSharp.Interop/16.0.0": {
+        "dependencies": {
+          "libLLVM": "16.0.6"
+        },
+        "runtime": {
+          "lib/net7.0/LLVMSharp.Interop.dll": {
+            "assemblyVersion": "16.0.0.0",
+            "fileVersion": "16.0.0.0"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Http.Features/5.0.17": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "5.0.1",
@@ -46,6 +69,7 @@
       "Core/1.0.0": {
         "dependencies": {
           "Antlr4.Runtime.Standard": "4.13.1",
+          "LLVMSharp": "16.0.0",
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Tesseract": "5.2.0"
         },
@@ -67,6 +91,27 @@
       "sha512": "sha512-Da5+i4kFHUseJRZGcBG5fmZGpA/Ns180ibrQMxgZzjpQOnENVvSL5gi5HZ8Ncz8/AR2WsKbOg2lMBzjz0HUQcA==",
       "path": "antlr4.runtime.standard/4.13.1",
       "hashPath": "antlr4.runtime.standard.4.13.1.nupkg.sha512"
+    },
+    "libLLVM/16.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZlIpwHUVzNb9jeSzu6NQYKiVeiXRQuNzpx/zZNw4tCbAqUPWmZ8Dj8WL2IX7BenuT1fTBdbsPsYz23PBxGxIkA==",
+      "path": "libllvm/16.0.6",
+      "hashPath": "libllvm.16.0.6.nupkg.sha512"
+    },
+    "LLVMSharp/16.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QIzFXzdVcvObPPXFAL6iA6g4imp8L5s/eDZYXteGgJvMi1tdUo7vLBF6axNDh9LSPqC8EMAILhXDlNR8VNE+kw==",
+      "path": "llvmsharp/16.0.0",
+      "hashPath": "llvmsharp.16.0.0.nupkg.sha512"
+    },
+    "LLVMSharp.Interop/16.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kzAGP489ixPUk0vcuS/100DZniGL23rpdBF2E5YBvl1P9KKOgdlcV11IjP/fU2GdMvte8teBcdhEU/NovsPjdA==",
+      "path": "llvmsharp.interop/16.0.0",
+      "hashPath": "llvmsharp.interop.16.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Http.Features/5.0.17": {
       "type": "package",

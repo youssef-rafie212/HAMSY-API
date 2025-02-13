@@ -19,12 +19,9 @@ namespace Core.Services
             throw new NotImplementedException();
         }
 
-        public IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto)
-        {
-            throw new NotImplementedException();
-        }
 
-        public IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto)
+
+        public IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto)
         {
             throw new NotImplementedException();
         }
@@ -92,7 +89,7 @@ namespace Core.Services
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
         {
             SymbolTablesCreator symbolTablesCreator = new();
-            symbolTablesCreator.CreateTables(symbolTablesRequestDto.ParseTree, null, null);
+            symbolTablesCreator.CreateTables(symbolTablesRequestDto.ParseTree, null);
 
             return new()
             {
@@ -124,6 +121,11 @@ namespace Core.Services
                 ParseTree = tree,
                 Errors = syntaxErrorsListener.Errors,
             };
+        }
+
+        public IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

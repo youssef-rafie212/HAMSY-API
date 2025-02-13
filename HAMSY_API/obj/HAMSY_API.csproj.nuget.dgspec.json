@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[4.13.1, )"
             },
+            "LLVMSharp": {
+              "target": "Package",
+              "version": "[16.0.0, )"
+            },
             "Microsoft.AspNetCore.Http.Features": {
               "target": "Package",
               "version": "[5.0.17, )"

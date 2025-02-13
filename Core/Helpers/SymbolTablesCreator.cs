@@ -8,9 +8,7 @@ namespace Core.Helpers
     {
         public List<SymbolTable> Tables = [];
         public List<string> Errors = [];
-        private int _ifScopeCounter = 0;
-        private int _elseScopeCounter = 0;
-        private int _whileScopeCounter = 0;
+        public string CurrentScope = "global";
 
         public SymbolTablesCreator()
         {
@@ -19,22 +17,19 @@ namespace Core.Helpers
             {
                 Scope = "global",
                 Names = [],
-                Parent = null,
             });
         }
 
         // Creates a symbol table for each scope and handles errors as well.
-        public void CreateTables(TreeNode node, SymbolTable? scope, TreeNode? prevSibling)
+        public void CreateTables(TreeNode node, TreeNode? prevSibling)
         {
             // Handle the global scope
             if (node.Type == TreeNodeType.Program.ToString())
             {
-                // No need to create a new symbol table as it gets initialized in the constructor.
-                SymbolTable globalScopeTable = Tables[0];
 
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], globalScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], i == 0 ? null : node.Children[i - 1]);
                 }
             }
 
@@ -43,74 +38,23 @@ namespace Core.Helpers
             {
                 string functionName = node.Children[1].Value;
                 // Add function name to the global scope (because we can only define functions in the global scopes).
-                Tables[0].Names.Add(functionName);
+                Tables[0].Names.Add(functionName, null);
+                Tables[0].NamesTypes.Add(functionName, "function");
 
                 SymbolTable functionScopeTable = new()
                 {
                     Names = [],
-                    Scope = $"function {functionName}",
-                    Parent = scope,
+                    Scope = $"{functionName}",
                 };
-
-                for (int i = 0; i < node.Children.Count; i++)
-                {
-                    if (i == 1) continue; // Skip adding the function name because we added it to the global scope already.
-                    CreateTables(node.Children[i], functionScopeTable, i == 0 ? null : node.Children[i - 1]);
-                }
                 Tables.Add(functionScopeTable);
-            }
 
-            // Create if statement scope
-            else if (node.Type == TreeNodeType.IfStatement.ToString())
-            {
-                _ifScopeCounter++;
-                SymbolTable ifScopeTable = new()
+                CurrentScope = functionName;
+                for (int i = 2; i < node.Children.Count; i++)
                 {
-                    Names = [],
-                    Scope = $"if statement {_ifScopeCounter}",
-                    Parent = scope,
-                };
-                for (int i = 0; i < node.Children.Count; i++)
-                {
-                    CreateTables(node.Children[i], ifScopeTable, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], i == 0 ? null : node.Children[i - 1]);
                 }
-                Tables.Add(ifScopeTable);
-            }
 
-            // Create else statement scope
-            else if (node.Type == TreeNodeType.ElseStatement.ToString())
-            {
-                _elseScopeCounter++;
-                SymbolTable elseScopeTable = new()
-                {
-                    Names = [],
-                    Scope = $"else statement {_elseScopeCounter}",
-                    Parent = scope,
-                };
-                for (int i = 0; i < node.Children.Count; i++)
-                {
-                    CreateTables(node.Children[i], elseScopeTable, i == 0 ? null : node.Children[i - 1]);
-                }
-                Tables.Add(elseScopeTable);
             }
-
-            // Create while statement scope
-            else if (node.Type == TreeNodeType.WhileLoop.ToString())
-            {
-                _whileScopeCounter++;
-                SymbolTable whileScopeTable = new()
-                {
-                    Names = [],
-                    Scope = $"while loop {_whileScopeCounter}",
-                    Parent = scope,
-                };
-                for (int i = 0; i < node.Children.Count; i++)
-                {
-                    CreateTables(node.Children[i], whileScopeTable, i == 0 ? null : node.Children[i - 1]);
-                }
-                Tables.Add(whileScopeTable);
-            }
-
             // Handle names
             else if (node.Type == TreeNodeType.Terminal.ToString())
             {
@@ -120,23 +64,29 @@ namespace Core.Helpers
                 // Identifier
                 if (!keywords.Contains(node.Value) && idRegex.IsMatch(node.Value))
                 {
+                    SymbolTable tableToAddTo = Tables.Find(t =>
+                    {
+                        string funcNameFromTableScope = t.Scope.Split(' ').Last();
+                        return funcNameFromTableScope == CurrentScope;
+                    })!;
                     // Declaration
                     if (prevSibling != null && prevSibling.Value == "int")
                     {
                         // Check if the name already exists in current scope.
-                        if (scope!.Names.Contains(node.Value))
+                        if (tableToAddTo!.Names.ContainsKey(node.Value))
                         {
-                            Errors.Add($"DECLARATION ERROR, name: '{node.Value}' already exists in the {scope.Scope} scope.");
+                            Errors.Add($"DECLARATION ERROR, name: '{node.Value}' already exists in the {CurrentScope} scope.");
                         }
                         else
                         {
-                            scope.Names.Add(node.Value);
+                            tableToAddTo.Names.Add(node.Value, null);
+                            tableToAddTo.NamesTypes.Add(node.Value, "variable");
                         }
                     }
                     // Usage
                     else
                     {
-                        if (!IsDeclared(node.Value, scope!))
+                        if (!IsDeclared(node.Value, tableToAddTo!))
                         {
                             Errors.Add($"VARIABLE USAGE ERROR, the name '{node.Value}' is used but not declared in usage scope or its parent scopes.");
                         }
@@ -148,16 +98,20 @@ namespace Core.Helpers
             {
                 for (int i = 0; i < node.Children.Count; i++)
                 {
-                    CreateTables(node.Children[i], scope, i == 0 ? null : node.Children[i - 1]);
+                    CreateTables(node.Children[i], i == 0 ? null : node.Children[i - 1]);
                 }
             }
         }
 
         private bool IsDeclared(string name, SymbolTable scope)
         {
-            if (scope.Names.Contains(name)) return true;
+            if (scope.Names.ContainsKey(name)) return true;
+            else
+            {
+                if (scope.Scope == "global") return false;
+                return IsDeclared(name, Tables[0]);
+            }
 
-            return IsDeclared(name, scope.Parent!);
         }
     }
 }

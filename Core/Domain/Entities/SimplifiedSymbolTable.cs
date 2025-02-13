@@ -4,6 +4,6 @@
     public class SimplifiedSymbolTable
     {
         public string Scope { get; set; } = string.Empty;
-        public List<string> Names { get; set; } = [];
+        public Dictionary<string, string> Names { get; set; } = [];
     }
 }

@@ -1,15 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "YzTkJ2QNQxU=",
+  "dgSpecHash": "KLSqZiBtX30=",
   "success": true,
-  "projectFilePath": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\HAMSY_API.csproj",
+  "projectFilePath": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\HAMSY_API.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\workstation\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512",
-    "C:\\Users\\workstation\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
-    "C:\\Users\\workstation\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
-    "C:\\Users\\workstation\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512",
-    "C:\\Users\\workstation\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
-    "C:\\Users\\workstation\\.nuget\\packages\\tesseract\\5.2.0\\tesseract.5.2.0.nupkg.sha512"
+    "C:\\Users\\joe69\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\libllvm\\16.0.6\\libllvm.16.0.6.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\llvmsharp\\16.0.0\\llvmsharp.16.0.0.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\llvmsharp.interop\\16.0.0\\llvmsharp.interop.16.0.0.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\joe69\\.nuget\\packages\\tesseract\\5.2.0\\tesseract.5.2.0.nupkg.sha512"
   ],
   "logs": []
 }

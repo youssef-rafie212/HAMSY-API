@@ -1,6 +1,38 @@
 [
   {
     "ContainingType": "HAMSY_API.Controllers.CompilationController",
+    "Method": "IRGeneration",
+    "RelativePath": "api/Compilation/ir-generation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.IRGenRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HAMSY_API.Controllers.CompilationController",
+    "Method": "IROptimization",
+    "RelativePath": "api/Compilation/ir-optimization",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.IROptRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HAMSY_API.Controllers.CompilationController",
     "Method": "LexicalAnalysis",
     "RelativePath": "api/Compilation/lexical-analysis",
     "HttpMethod": "POST",
@@ -10,6 +42,22 @@
       {
         "Name": "req",
         "Type": "Core.DTO.LexicalRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HAMSY_API.Controllers.CompilationController",
+    "Method": "SemanticAnalysis",
+    "RelativePath": "api/Compilation/semantic-analysis",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.SemanticRequestDto",
         "IsRequired": true
       }
     ],
@@ -42,6 +90,22 @@
       {
         "Name": "req",
         "Type": "Core.DTO.SyntaxRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HAMSY_API.Controllers.MemoryAnalysisController",
+    "Method": "Analyze",
+    "RelativePath": "api/memory-analysis/Analyze",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.MemoryRequestDto",
         "IsRequired": true
       }
     ],

@@ -1,8 +1,12 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "Id": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
       "PackagePath": "staticwebassets\\Uploads\\test.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HAMSY_API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HAMSY_API.Microsoft.AspNetCore.StaticWebAssets.props",
