@@ -3,7 +3,6 @@ using Core.ANTLR.ErrorListeners;
 using Core.Domain.Entities;
 using Core.DTO;
 using Core.Helpers;
-using Core.LLVM;
 using Core.ServiceContracts;
 
 namespace Core.Services
@@ -20,18 +19,9 @@ namespace Core.Services
             throw new NotImplementedException();
         }
 
-        public IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto)
-        {
-            SymbolTableResponseDto symbolTables = SymbolTables(new() { ParseTree = irGenRequestDto.ParseTree });
-            LLVMIRGenerator generator = new("HAMSY", symbolTables.SymbolTables);
-            generator.Traverse(irGenRequestDto.AST);
-            return new()
-            {
-                IR = generator.GetIR()
-            };
-        }
 
-        public IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto)
+
+        public IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto)
         {
             throw new NotImplementedException();
         }
@@ -117,6 +107,11 @@ namespace Core.Services
                 ParseTree = tree,
                 Errors = syntaxErrorsListener.Errors,
             };
+        }
+
+        public IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -17,6 +17,22 @@
   },
   {
     "ContainingType": "HAMSY_API.Controllers.CompilationController",
+    "Method": "IROptimization",
+    "RelativePath": "api/Compilation/ir-optimization",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.IROptRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HAMSY_API.Controllers.CompilationController",
     "Method": "LexicalAnalysis",
     "RelativePath": "api/Compilation/lexical-analysis",
     "HttpMethod": "POST",

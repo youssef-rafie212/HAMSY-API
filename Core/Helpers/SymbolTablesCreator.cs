@@ -44,7 +44,7 @@ namespace Core.Helpers
                 SymbolTable functionScopeTable = new()
                 {
                     Names = [],
-                    Scope = $"function {functionName}",
+                    Scope = $"{functionName}",
                 };
                 Tables.Add(functionScopeTable);
 
