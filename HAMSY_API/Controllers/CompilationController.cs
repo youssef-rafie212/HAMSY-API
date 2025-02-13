@@ -52,5 +52,13 @@ namespace HAMSY_API.Controllers
                 res.Errors
             });
         }
-    }
+
+        [HttpPost("semantic-analysis")]
+        public IActionResult SemanticAnalysis(SemanticRequestDto req) 
+        {
+	        SemanticResponseDto res = _compilationService.SemanticAnalysis(req);
+	        return Ok(res);
+        }
+
+	}
 }

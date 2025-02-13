@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YNjnRGU8VO0BBiv4oqOUkmNOfHhi2ig1Wr7q7T0oBsI=",
+  "Hash": "+1YbvxFzxw4vzFo1E6Fi+fTaF701D2ewKVOBuSPNRXs=",
   "Source": "HAMSY_API",
   "BasePath": "_content/HAMSY_API",
   "Mode": "Default",
@@ -10,11 +10,30 @@
     {
       "Name": "HAMSY_API\\wwwroot",
       "Source": "HAMSY_API",
-      "ContentRoot": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\",
       "BasePath": "_content/HAMSY_API",
       "Pattern": "**"
     }
   ],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "SourceId": "HAMSY_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\",
+      "BasePath": "_content/HAMSY_API",
+      "RelativePath": "Uploads/test.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\test.png"
+    }
+  ]
 }
