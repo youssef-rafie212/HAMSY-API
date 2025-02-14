@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "70gMj5nQ1i0J969/5C78kcBLOCCmtckTLC3o2Dd129I=",
+  "Hash": "aamoRZrgIKfWAzOphJ5Ng+K2ZKo7yJ/la0dB272V4vE=",
   "Source": "HAMSY_API",
   "BasePath": "_content/HAMSY_API",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "HAMSY_API\\wwwroot",
       "Source": "HAMSY_API",
-      "ContentRoot": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\",
       "BasePath": "_content/HAMSY_API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "Identity": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\Uploads\\test.png",
       "SourceId": "HAMSY_API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\",
       "BasePath": "_content/HAMSY_API",
       "RelativePath": "Uploads/test#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -41,7 +41,7 @@
   "Endpoints": [
     {
       "Route": "Uploads/test.74je0wfbi6.png",
-      "AssetFile": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "AssetFile": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\Uploads\\test.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -62,7 +62,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 09 Feb 2025 12:43:43 GMT"
+          "Value": "Mon, 10 Feb 2025 08:46:27 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -86,7 +86,7 @@
     },
     {
       "Route": "Uploads/test.png",
-      "AssetFile": "C:\\Users\\joe69\\source\\repos\\HAMSY\\HAMSY_API\\wwwroot\\Uploads\\test.png",
+      "AssetFile": "C:\\Users\\workstation\\source\\repos\\HAMSY-API\\HAMSY_API\\wwwroot\\Uploads\\test.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -107,7 +107,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 09 Feb 2025 12:43:43 GMT"
+          "Value": "Mon, 10 Feb 2025 08:46:27 GMT"
         },
         {
           "Name": "Cache-Control",

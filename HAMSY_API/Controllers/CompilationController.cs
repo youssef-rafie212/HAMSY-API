@@ -60,5 +60,11 @@ namespace HAMSY_API.Controllers
 	        return Ok(res);
         }
 
-	}
+        [HttpPost("ir-generation")]
+        public IActionResult IRGeneration(IRGenRequestDto req)
+        {
+	        IRGenResponseDto res = _compilationService.IRGeneration(req);
+	        return Ok(res);
+        }
+    }
 }
