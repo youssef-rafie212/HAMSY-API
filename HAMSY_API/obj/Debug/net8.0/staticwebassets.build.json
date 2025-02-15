@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Jks2IgHrT1Ng9jmUCGYGlf+Ayolr6c7I8JxyjARDYzM=",
+  "Hash": "8Xrzk5+wi3f+8eRjSKIUCFuOKhGXJLCthGhnoImo2cs=",
   "Source": "HAMSY_API",
   "BasePath": "_content/HAMSY_API",
   "Mode": "Default",
@@ -62,7 +62,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 15 Feb 2025 17:52:06 GMT"
+          "Value": "Sat, 15 Feb 2025 20:50:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -107,7 +107,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 15 Feb 2025 17:52:06 GMT"
+          "Value": "Sat, 15 Feb 2025 20:50:55 GMT"
         },
         {
           "Name": "Cache-Control",

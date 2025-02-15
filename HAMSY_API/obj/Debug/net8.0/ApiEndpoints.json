@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "HAMSY_API.Controllers.AIOptimizationController",
+    "Method": "Optimize",
+    "RelativePath": "api/ai-optimization/Optimize",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Core.DTO.SourceOptRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HAMSY_API.Controllers.CompilationController",
     "Method": "IRGeneration",
     "RelativePath": "api/Compilation/ir-generation",
