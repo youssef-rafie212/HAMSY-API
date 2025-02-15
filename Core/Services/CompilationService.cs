@@ -69,23 +69,12 @@ namespace Core.Services
 
         public SemanticResponseDto SemanticAnalysis(SemanticRequestDto semanticRequestDto)
         {
-            var errors = new List<string>();
-
-            if (semanticRequestDto.ParseTree == null)
-            {
-                errors.Add("Invalid parse tree provided.");
-                return new SemanticResponseDto { Errors = errors };
-            }
-
-            var parseTree = semanticRequestDto.ParseTree;
-
             var builder = new ASTBuilder();
-            TreeNode ast = builder.ConvertToAST(parseTree);
+            TreeNode ast = builder.ConvertToAST(semanticRequestDto.ParseTree);
 
             return new SemanticResponseDto
             {
                 AST = ast,
-                Errors = errors
             };
         }
         public SymbolTableResponseDto SymbolTables(SymbolTablesRequestDto symbolTablesRequestDto)
