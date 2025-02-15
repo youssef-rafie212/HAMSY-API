@@ -9,5 +9,6 @@ namespace Core.Domain.Entities
         // Key for name, value for type (variable / function)
         public Dictionary<string, LLVMValueRef> Names { get; set; } = [];
         public Dictionary<string, string> NamesTypes { get; set; } = [];
+        public SymbolTable? Parent { get; set; }
     }
 }

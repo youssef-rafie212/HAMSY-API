@@ -32,3 +32,20 @@ C:\Users\workstation\source\repos\HAMSY-API\Core\obj\Debug\net8.0\Core.dll
 C:\Users\workstation\source\repos\HAMSY-API\Core\obj\Debug\net8.0\refint\Core.dll
 C:\Users\workstation\source\repos\HAMSY-API\Core\obj\Debug\net8.0\Core.pdb
 C:\Users\workstation\source\repos\HAMSY-API\Core\obj\Debug\net8.0\ref\Core.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\x86\leptonica-1.82.0.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\x86\tesseract50.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\x64\leptonica-1.82.0.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\x64\tesseract50.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\Core.deps.json
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\Core.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\bin\Debug\net8.0\Core.pdb
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.csproj.AssemblyReference.cache
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.AssemblyInfoInputs.cache
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.AssemblyInfo.cs
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.csproj.CoreCompileInputs.cache
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.sourcelink.json
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\refint\Core.dll
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\Core.pdb
+C:\uwu\0010\workspace\projects\web\Back-end\dot net\HAMSY-API\Core\obj\Debug\net8.0\ref\Core.dll
