@@ -227,7 +227,7 @@ namespace Core.Helpers
         {
             if (node.Type == "VariableDeclaration")
             {
-                declarations.Add($"{node.Value} = 0;");
+                declarations.Add($"declare {node.Value}");
             }
 
             foreach (var child in node.Children)

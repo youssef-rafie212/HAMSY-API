@@ -1,11 +1,4 @@
 ﻿using Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 
 namespace Core.Helpers
 {
@@ -15,7 +8,7 @@ namespace Core.Helpers
         {
             if (parseTreeNode.Type == "Terminal" && parseTreeNode.Value == "<EOF>")
             {
-	            return new TreeNode(""); // Ignore EOF token
+                return new TreeNode(""); // Ignore EOF token
             }
 
             switch (parseTreeNode.Type)
@@ -70,7 +63,7 @@ namespace Core.Helpers
 
                 case "MainFunction":
                     var mainNode = new TreeNode("MainFunction");
-                    mainNode.Value = "Main";
+                    mainNode.Value = "main";
 
                     for (int i = 5; i < parseTreeNode.Children.Count - 1; i++)
                     {
@@ -79,18 +72,18 @@ namespace Core.Helpers
                     return mainNode;
 
                 case "FunctionCall":
-	                return new TreeNode("FunctionCall")
-	                {
-		                Value = parseTreeNode.Children[0].Value, // Function name
-		                Children =
-		                {
-			                ConvertToAST(parseTreeNode.Children[2]), // First argument
+                    return new TreeNode("FunctionCall")
+                    {
+                        Value = parseTreeNode.Children[0].Value, // Function name
+                        Children =
+                        {
+                            ConvertToAST(parseTreeNode.Children[2]), // First argument
 			                ConvertToAST(parseTreeNode.Children[4])  // Second argument
 		                }
-	                };
+                    };
 
 
-				case "ReturnStatement":
+                case "ReturnStatement":
                     return new TreeNode("ReturnStatement")
                     {
                         Children = { ConvertToAST(parseTreeNode.Children[1]) } // expression
@@ -106,7 +99,7 @@ namespace Core.Helpers
 						}
                     };
 
-				case "Condition":
+                case "Condition":
                     return new TreeNode("Condition")
                     {
                         Value = parseTreeNode.Children[1].Value, // operator
