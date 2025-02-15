@@ -103,7 +103,7 @@ namespace Core.Helpers
                 SymbolTable whileScopeTable = new()
                 {
                     Names = [],
-                    Scope = $"while block {ElseCounter} in function {scope!.Scope.Split(' ').Last()}",
+                    Scope = $"while block {WhileCounter} in function {scope!.Scope.Split(' ').Last()}",
                     Parent = scope,
                 };
                 Tables.Add(whileScopeTable);
