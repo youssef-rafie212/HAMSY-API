@@ -10,3 +10,5 @@
 .ncb
 .opendb
 .code-workspace
+Core/obj/
+HAMSY_API/obj/
