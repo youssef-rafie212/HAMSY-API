@@ -109,6 +109,8 @@ namespace Core.Services
         {
             IROptimizer optimizer = new(irOptRequestDto.IR);
 
+            optimizer.ApplyConstantFoldingPass();
+            optimizer.ApplyConstantPropagationPass();
             optimizer.ApplyCommonSubexpressionEliminationPass();
 
             return new()
