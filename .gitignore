@@ -12,3 +12,5 @@
 .code-workspace
 Core/obj/
 HAMSY_API/obj/
+Core/bin/
+HAMSY_API/bin/
