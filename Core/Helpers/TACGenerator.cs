@@ -137,8 +137,8 @@ namespace Core.Helpers
 
                     string cond = TraverseAST(node.Children[0]);
 
-                    TACInstructions.Add($"if {cond} goto {loopStart}:");
-                    TACInstructions.Add($"goto {loopend}:");
+                    TACInstructions.Add($"if {cond} goto {loopStart}");
+                    TACInstructions.Add($"goto {loopend}");
 
                     TACInstructions.Add($"{loopStart}:");
 
@@ -147,8 +147,8 @@ namespace Core.Helpers
 
                     //TACInstructions.Add($"goto {loopStart}");
                     cond = TraverseAST(node.Children[0]);
-                    TACInstructions.Add($"if {cond} goto {loopStart}:");
-                    TACInstructions.Add($"goto {loopend}:");
+                    TACInstructions.Add($"if {cond} goto {loopStart}");
+                    TACInstructions.Add($"goto {loopend}");
 
                     TACInstructions.Add($"{loopend}:");
                     break;
@@ -172,11 +172,11 @@ namespace Core.Helpers
                     if (node.Type == "FunctionDefinition")
                     {
                         TreeNode p = node.Children[0];
-                        inst += $"({p.Children[0].Value}, {p.Children[1].Value}):";
+                        inst += $" ({p.Children[0].Value}, {p.Children[1].Value}):";
                     }
                     else
                     {
-                        inst += $"():";
+                        inst += $" ():";
                     }
 
                     TACInstructions.Add(inst);

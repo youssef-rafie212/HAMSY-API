@@ -5,7 +5,7 @@ using Core.Enums;
 
 namespace Core.Helpers
 {
-    public static class ParseTreeMaper
+    public static class ParseTreeMapper
     {
         // Maps antlr tree to our TreeNode structure.
         public static TreeNode MapToParseTree(IParseTree antlrTree)

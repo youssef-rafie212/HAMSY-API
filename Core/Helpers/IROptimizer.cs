@@ -1,38 +1,92 @@
-﻿using LLVMSharp.Interop;
-
-namespace Core.Helpers
+﻿namespace Core.Helpers
 {
     public class IROptimizer
     {
-        private LLVMModuleRef _module;
+        public List<string> IR { get; private set; }
 
-        public IROptimizer(LLVMModuleRef module)
+        public IROptimizer(string ir)
         {
-            _module = module;
+            IR = [.. ir.Split('\n')];
         }
 
-        public unsafe void ApplyOptimizations()
+        public void ApplyCommonSubexpressionEliminationPass()
         {
-            LLVMPassManagerRef passManager = LLVM.CreatePassManager();
+            List<string> optimizedIR = [];
 
-            LLVM.AddInstructionCombiningPass(passManager);
-            LLVM.AddPromoteMemoryToRegisterPass(passManager);
-            LLVM.AddGVNPass(passManager);
-            LLVM.AddCFGSimplificationPass(passManager);
+            //         scope              expr    varName
+            Dictionary<string, Dictionary<string, string>> expressions = [];
+            expressions.Add("global", []);
 
-            LLVM.RunPassManager(passManager, _module);
+            string currentScope = "global";
 
-            LLVM.DisposePassManager(passManager);
+            foreach (string i in IR)
+            {
+                string instruction = i.Trim();
+                // assignment
+                if (instruction.Contains("=") && !instruction.Contains("call"))
+                {
+                    string varName = instruction.Split("=")[0].Trim();
+                    string expression = instruction.Split("=")[1].Trim();
+                    Dictionary<string, string> relatedExpressions = expressions[currentScope];
+
+                    bool predicate = true;
+                    bool reversed = false;
+
+                    // If expression operator allows reversing operands.
+                    if (expression.Contains("==") || expression.Contains("!=") || expression.Contains("+") || expression.Contains("*"))
+                    {
+                        reversed = true;
+                        string reversedExpr = ReverseExpr(expression);
+                        predicate = relatedExpressions.ContainsKey(expression) || relatedExpressions.ContainsKey(reversedExpr);
+                    }
+                    else
+                    {
+                        predicate = relatedExpressions.ContainsKey(expression);
+                    }
+
+                    // If expression already exists in the current scope.
+                    if (predicate)
+                    {
+                        optimizedIR.Add($"{varName} = {relatedExpressions[reversed ? ReverseExpr(expression) : expression]}");
+                    }
+                    else
+                    {
+                        optimizedIR.Add(instruction);
+                        relatedExpressions.Add(expression, varName);
+                    }
+                }
+                // Function (new scope)
+                else if (instruction.Contains("function"))
+                {
+                    optimizedIR.Add(instruction);
+                    string funcName = instruction.Split(" ")[1];
+                    currentScope = funcName;
+                    expressions.Add(funcName, []);
+                }
+                // Label (new scope)
+                else if (instruction.StartsWith("L") && instruction.EndsWith(":"))
+                {
+                    optimizedIR.Add(instruction);
+                    currentScope = instruction;
+                    expressions.Add(instruction, []);
+                }
+                else if (instruction.Trim() != "")
+                {
+                    optimizedIR.Add(instruction);
+                }
+            }
+
+            IR = optimizedIR;
         }
 
-        public string GetIRString()
+        public string ReverseExpr(string expr)
         {
-            return _module.PrintToString();
+            return string.Join(' ', expr.Split(' ').Reverse());
         }
 
-        public LLVMModuleRef GetIRModule()
+        public string GetIR()
         {
-            return _module;
+            return string.Join("\n", IR);
         }
     }
 }

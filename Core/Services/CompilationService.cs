@@ -58,7 +58,7 @@ namespace Core.Services
             HAMSYParser.ProgramContext cntx = parser.program();
 
             // Convert the ANTLR tree to our TreeNode structure.
-            TreeNode tree = ParseTreeMaper.MapToParseTree(cntx);
+            TreeNode tree = ParseTreeMapper.MapToParseTree(cntx);
 
             return new()
             {
@@ -107,7 +107,14 @@ namespace Core.Services
 
         public IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto)
         {
-            throw new NotImplementedException();
+            IROptimizer optimizer = new(irOptRequestDto.IR);
+
+            optimizer.ApplyCommonSubexpressionEliminationPass();
+
+            return new()
+            {
+                OptimizedIR = optimizer.GetIR()
+            };
         }
 
         public InsSelResponseDto InstructionSelection(InsSelRequestDto insSelRequestDto)

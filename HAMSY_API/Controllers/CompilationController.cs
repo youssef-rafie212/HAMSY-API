@@ -54,17 +54,24 @@ namespace HAMSY_API.Controllers
         }
 
         [HttpPost("semantic-analysis")]
-        public IActionResult SemanticAnalysis(SemanticRequestDto req) 
+        public IActionResult SemanticAnalysis(SemanticRequestDto req)
         {
-	        SemanticResponseDto res = _compilationService.SemanticAnalysis(req);
-	        return Ok(res);
+            SemanticResponseDto res = _compilationService.SemanticAnalysis(req);
+            return Ok(res);
         }
 
         [HttpPost("ir-generation")]
         public IActionResult IRGeneration(IRGenRequestDto req)
         {
-	        IRGenResponseDto res = _compilationService.IRGeneration(req);
-	        return Ok(res);
+            IRGenResponseDto res = _compilationService.IRGeneration(req);
+            return Ok(res);
+        }
+
+        [HttpPost("ir-optimization")]
+        public IActionResult IROptimization(IROptRequestDto req)
+        {
+            IROptResponseDto res = _compilationService.IROptimization(req);
+            return Ok(res);
         }
     }
 }
