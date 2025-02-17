@@ -109,10 +109,12 @@ namespace Core.Services
         {
             IROptimizer optimizer = new(irOptRequestDto.IR);
 
-            optimizer.ApplyConstantFoldingPass();
-            optimizer.ApplyConstantPropagationPass();
-            optimizer.ApplyCommonSubexpressionEliminationPass();
-
+            for (int i = 0; i < 20; i++)
+            {
+                optimizer.ApplyConstantFoldingPass();
+                optimizer.ApplyConstantPropagationPass();
+                optimizer.ApplyCommonSubexpressionEliminationPass();
+            }
             return new()
             {
                 OptimizedIR = optimizer.GetIR()

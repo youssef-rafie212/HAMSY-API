@@ -31,6 +31,13 @@ namespace Core.Helpers
                     string expression = instruction.Split("=")[1].Trim();
                     Dictionary<string, string> relatedExpressions = expressions[currentScope];
 
+                    // if the expression is a single operand do nothing
+                    if (expression.Split(' ').Length == 1)
+                    {
+                        optimizedIR.Add(instruction);
+                        return;
+                    }
+
                     bool predicate = true;
                     bool reversed = false;
 
@@ -49,11 +56,27 @@ namespace Core.Helpers
                     // If expression already exists in the current scope.
                     if (predicate)
                     {
-                        optimizedIR.Add($"{varName} = {relatedExpressions[reversed ? ReverseExpr(expression) : expression]}");
+                        if (reversed)
+                        {
+                            if (relatedExpressions.ContainsKey(expression))
+                            {
+                                optimizedIR.Add($"{varName} = {relatedExpressions[expression]}");
+                            }
+                            else
+                            {
+                                optimizedIR.Add($"{varName} = {relatedExpressions[ReverseExpr(expression)]}");
+                            }
+                        }
+                        else
+                        {
+                            optimizedIR.Add($"{varName} = {relatedExpressions[expression]}");
+                        }
+
                     }
                     else
                     {
                         optimizedIR.Add(instruction);
+                        RemoveEntryByValue(relatedExpressions, varName);
                         relatedExpressions.Add(expression, varName);
                     }
                 }
@@ -72,7 +95,7 @@ namespace Core.Helpers
                     currentScope = instruction;
                     expressions.Add(instruction, []);
                 }
-                else if (instruction.Trim() != "")
+                else if (instruction != "")
                 {
                     optimizedIR.Add(instruction);
                 }
@@ -91,8 +114,14 @@ namespace Core.Helpers
 
                 int op1 = 0; int op2 = 0;
 
-                bool predicate =
-                    (instruction.Contains("+")
+                bool predicate = false;
+                char sep = ' ';
+
+                if (instruction.Contains("=")) sep = '=';
+
+                if (sep == '=')
+                {
+                    predicate = (instruction.Contains("+")
                     || instruction.Contains("-")
                     || instruction.Contains("*")
                     || instruction.Contains("/")
@@ -100,20 +129,45 @@ namespace Core.Helpers
                     )
                     &&
                     (
-                       (int.TryParse(instruction.Split('=')[1].Trim().Split(' ')[0], out op1))
+                       (int.TryParse(instruction.Split(sep)[1].Trim().Split(' ')[0], out op1))
                        &&
-                       (int.TryParse(instruction.Split('=')[1].Trim().Split(' ')[2], out op2))
+                       (int.TryParse(instruction.Split(sep)[1].Trim().Split(' ')[2], out op2))
                     );
-
-                // Check if mathematical expression with 2 numeric constants
-                if (predicate)
-                {
-                    string varName = instruction.Split("=")[0].Trim();
-                    string operation = instruction.Split("=")[1].Trim().Split(' ')[1];
-                    int result = CalculateExpression(operation, op1, op2);
-                    optimizedIR.Add($"{varName} = {result}");
                 }
                 else
+                {
+                    predicate = (instruction.Contains("+")
+                    || instruction.Contains("-")
+                    || instruction.Contains("*")
+                    || instruction.Contains("/")
+                    || instruction.Contains("%")
+                    )
+                    &&
+                    (
+                       (int.TryParse(instruction.Split(sep).Skip(1).ToList()[0], out op1))
+                       &&
+                       (int.TryParse(instruction.Split(sep).Skip(1).ToList()[2], out op2))
+                    );
+                }
+
+                if (predicate)
+                {
+                    if (sep == '=')
+                    {
+                        string varName = instruction.Split("=")[0].Trim();
+                        string operation = instruction.Split("=")[1].Trim().Split(' ')[1];
+                        int result = CalculateExpression(operation, op1, op2);
+                        optimizedIR.Add($"{varName} = {result}");
+                    }
+                    else
+                    {
+                        string operation = instruction.Split(sep).Skip(1).ToList()[1];
+                        int result = CalculateExpression(operation, op1, op2);
+                        string key = instruction.Contains("param") ? "param" : "return";
+                        optimizedIR.Add($"{key} {result}");
+                    }
+                }
+                else if (instruction != "")
                 {
                     optimizedIR.Add(instruction);
                 }
@@ -128,9 +182,7 @@ namespace Core.Helpers
 
             //         scope          varName    value
             Dictionary<string, Dictionary<string, int>> namesWithConstant = [];
-            Dictionary<string, List<string>> namesWithScope = [];
             namesWithConstant.Add("global", []);
-            namesWithScope.Add("global", []);
 
             string currentScope = "global";
 
@@ -138,14 +190,16 @@ namespace Core.Helpers
             {
                 string instruction = i.Trim();
                 int constValue = 0;
+                Dictionary<string, int> relatedNames = namesWithConstant[currentScope];
 
-                // Assignment
                 if (instruction.Contains("="))
                 {
                     string varName = instruction.Split("=")[0].Trim();
-                    namesWithScope[currentScope].Add(varName);
 
-                    Dictionary<string, int> relatedNames = namesWithConstant[currentScope];
+                    if (relatedNames.ContainsKey(varName) && !int.TryParse(instruction.Split("=")[1].Trim(), out int temp))
+                    {
+                        relatedNames.Remove(varName);
+                    }
 
                     // Constant number assignment
                     if (instruction.Split("=")[1].Trim().Split(" ").Length == 1 &&
@@ -161,6 +215,7 @@ namespace Core.Helpers
                         {
                             relatedNames.Add(varName, constValue);
                         }
+                        optimizedIR.Add(instruction);
                     }
                     // check for usage of a constant variable
                     else
@@ -174,14 +229,34 @@ namespace Core.Helpers
                             {
                                 newInst = Regex.Replace(newInst, token, relatedNames[token].ToString());
                             }
-                            // Replace name with its constant value from global scope (only if the name doesnt exist in the current scope).
-                            else if (!namesWithScope[currentScope].Contains(token) && namesWithConstant["global"].ContainsKey(token))
-                            {
-                                newInst = Regex.Replace(newInst, token, namesWithConstant["global"][token].ToString());
-                            }
                         }
                         optimizedIR.Add(newInst);
                     }
+                }
+                else if (instruction.Contains("param"))
+                {
+                    string newInst = instruction;
+                    string paramValue = instruction.Split(" ")[1].Trim();
+                    // Replace name with its constant value from current scope.
+                    if (relatedNames.ContainsKey(paramValue))
+                    {
+                        newInst = Regex.Replace(newInst, paramValue, relatedNames[paramValue].ToString());
+                    }
+                    optimizedIR.Add(newInst);
+                }
+                else if (instruction.Contains("return"))
+                {
+                    string newInst = instruction;
+                    string expression = instruction.Split(" ")[1].Trim();
+                    foreach (string token in expression.Split(' '))
+                    {
+                        // Replace name with its constant value from current scope.
+                        if (relatedNames.ContainsKey(token))
+                        {
+                            newInst = Regex.Replace(newInst, token, relatedNames[token].ToString());
+                        }
+                    }
+                    optimizedIR.Add(newInst);
                 }
                 // Function (new scope)
                 else if (instruction.Contains("function"))
@@ -190,9 +265,14 @@ namespace Core.Helpers
                     string funcName = instruction.Split(" ")[1];
                     currentScope = funcName;
                     namesWithConstant.Add(funcName, []);
-                    namesWithScope.Add(funcName, []);
                 }
-                else if (instruction.Trim() != "")
+                else if (instruction.StartsWith("L") && instruction.EndsWith(":"))
+                {
+                    optimizedIR.Add(instruction);
+                    currentScope = instruction;
+                    namesWithConstant.Add(instruction, []);
+                }
+                else if (instruction != "")
                 {
                     optimizedIR.Add(instruction);
                 }
@@ -219,6 +299,26 @@ namespace Core.Helpers
         private string ReverseExpr(string expr)
         {
             return string.Join(' ', expr.Split(' ').Reverse());
+        }
+
+        private void RemoveEntryByValue(Dictionary<string, string> dict, string value)
+        {
+            List<string> keysToRemove = new List<string>();
+
+            // Find keys with the target value
+            foreach (var kvp in dict)
+            {
+                if (kvp.Value == value)
+                {
+                    keysToRemove.Add(kvp.Key);
+                }
+            }
+
+            // Remove the keys from the dictionary
+            foreach (var key in keysToRemove)
+            {
+                dict.Remove(key);
+            }
         }
 
         public string GetIR()
