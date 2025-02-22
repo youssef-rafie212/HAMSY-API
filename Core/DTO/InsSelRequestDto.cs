@@ -5,6 +5,6 @@ namespace Core.DTO
     public class InsSelRequestDto
     {
         [Required]
-        public string IR { get; set; }
+        public List<string> IR { get; set; }
     }
 }

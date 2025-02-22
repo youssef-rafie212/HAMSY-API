@@ -166,7 +166,7 @@ namespace Core.Helpers
 				//	break;
 				case "FunctionDefinition":
 					TreeNode p = node.Children[0];
-					TACInstructions.Add($"function {node.Value} ({p.Children[0].Value}, {p.Children[1].Value}):");
+					TACInstructions.Add($"function {node.Value} ({p.Children[0].Value},{p.Children[1].Value}):");
 
 					var decs = new List<string>();
 					CollectVariableDeclarations(node, decs);

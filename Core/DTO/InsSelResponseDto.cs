@@ -2,7 +2,7 @@
 {
     public class InsSelResponseDto
     {
-        public string Assembly { get; set; } = string.Empty;
+	    public List<string> Assembly { get; set; } = new List<string>();
         public List<string> Errors { get; set; } = [];
     }
 }

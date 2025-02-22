@@ -123,8 +123,14 @@ namespace Core.Services
 
         public InsSelResponseDto InstructionSelection(InsSelRequestDto insSelRequestDto)
         {
-            throw new NotImplementedException();
-        }
+	        var response = new InsSelResponseDto();
+			InstructionSelector selector = new InstructionSelector();
+
+			var ilocInstructions = selector.GereateILOC(insSelRequestDto.IR);
+			response.Assembly = ilocInstructions;
+
+			return response;
+		}
 
         public RegAllocResponseDto RegisterAllocation(RegAllocResponseDto regAllocResponseDto)
         {
