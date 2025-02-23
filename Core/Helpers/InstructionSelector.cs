@@ -12,7 +12,7 @@ namespace Core.Helpers
 		private int registerCounter = 0;
 		private bool flag = false;
 		private string lastReg = "";
-
+		private string lastLine = "";
 		public List<string> ILOCInstructions { get; set; }
 
 		public InstructionSelector()
@@ -102,64 +102,12 @@ namespace Core.Helpers
 
 				if (op == "+" || op == "-" || op == "/" || op == "*")
 				{
+					lastLine = tacInstruction;
 					flag = true;
 				}
 
 			}
-			//else if (tokens.Length == 5 && tokens[1] == "=" && (tokens[3] == "+" || tokens[3] == "-" || tokens[3] == "*" || tokens[3] == "/" || tokens[3] == "%"))
-			//{ // t = x - 1
-			//	string dest = tokens[0];
-			//	string src1 = tokens[2];
-			//	string op = tokens[3];
-			//	string src2 = tokens[4];
-
-			//	string reg1 = NewRegister();
-			//	string reg2 = NewRegister();
-			//	string reg3 = NewRegister();
-			//	lastReg = reg3;
-
-			//	Load(src1, reg1);
-			//	Load(src2, reg2);
-
-			//	string operation = "";
-
-			//	if (op == "+") operation = "add";
-			//	else if (op == "-") operation = "sub";
-			//	else if (op == "*") operation = "mult";
-			//	else if (op == "/") operation = "div";
-
-			//	ILOCInstructions.Add($"{operation} {reg1}, {reg2} -> {reg3}");
-			//	flag = true;
-			//}
-
-			//else if (tokens.Length == 5 && tokens[1] == "=")
-			//{ // t = x - 1
-			//	string dest = tokens[0];
-			//	string src1 = tokens[2];
-			//	string src2 = tokens[4];
-			//	string op = tokens[3];
-
-			//	string reg1 = NewRegister();
-			//	string reg2 = NewRegister();
-			//	string reg3 = NewRegister();
-			//	lastReg = reg3;
-
-			//	Load(src1, reg1);
-			//	Load(src2, reg2);
-
-			//	string oper = "";
-
-			//	switch (op)
-			//	{
-			//		case "+": oper = "add"; break;
-			//		case "-": oper = "sub"; break;
-			//		case "/": oper = "div"; break;
-			//		case "*": oper = "mult"; break;
-			//	}
-			//	ILOCInstructions.Add($"{oper} {reg1} , {reg2} -> {reg3}");
-			//	flag = true;
-			//}
-
+			
 			else if (tokens[0] == "if")
 			{ // if t goto l1
 				string l1 = tokens[3];
@@ -180,6 +128,13 @@ namespace Core.Helpers
 			else if (tokens[0] == "return")
 			{
 				string returnValue = tokens[1];
+
+				if (flag)
+				{
+					ILOCInstructions.Add($"store {lastReg} -> RET");
+					flag = false;
+					return;
+				}
 				string reg = NewRegister();
 
 				Load(returnValue, reg);
