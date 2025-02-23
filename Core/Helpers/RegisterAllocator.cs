@@ -152,7 +152,14 @@ namespace Core.Helpers
                         r1.Address = address;
                         PhysicalRegister p1 = Allocate(r1);
 
-                        Output.Add($"load {address} -> {p1.ID}");
+                        if (int.TryParse(address, out int _))
+                        {
+                            Output.Add($"loadI {address} -> {p1.ID}");
+                        }
+                        else
+                        {
+                            Output.Add($"load {address} -> {p1.ID}");
+                        }
 
                         if (r1.Uses.Count != 0) UpdatePNext(p1);
                     }
