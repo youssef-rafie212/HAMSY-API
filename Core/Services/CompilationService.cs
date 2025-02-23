@@ -123,23 +123,23 @@ namespace Core.Services
 
         public InsSelResponseDto InstructionSelection(InsSelRequestDto insSelRequestDto)
         {
-	        var response = new InsSelResponseDto();
-			InstructionSelector selector = new InstructionSelector();
+            var response = new InsSelResponseDto();
+            InstructionSelector selector = new InstructionSelector();
 
-			var ilocInstructions = selector.GereateILOC(insSelRequestDto.IR);
-			response.Assembly = ilocInstructions;
+            var ilocInstructions = selector.GereateILOC(insSelRequestDto.IR);
+            response.Assembly = ilocInstructions;
 
-			return response;
-		}
-
-        public RegAllocResponseDto RegisterAllocation(RegAllocResponseDto regAllocResponseDto)
-        {
-            throw new NotImplementedException();
+            return response;
         }
         public InsSchedResponseDto InstructionScheduling(InsSchedRequestDto insSchedRequestDto)
         {
             throw new NotImplementedException();
         }
 
+        public RegAllocResponseDto RegisterAllocation(RegAllocRequestDto regAllocRequestDto)
+        {
+            RegisterAllocator r = new(regAllocRequestDto.Assembly);
+            return new() { Assembly = r.Output };
+        }
     }
 }

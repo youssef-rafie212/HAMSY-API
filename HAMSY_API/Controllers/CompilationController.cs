@@ -73,11 +73,18 @@ namespace HAMSY_API.Controllers
             IROptResponseDto res = _compilationService.IROptimization(req);
             return Ok(res);
         }
-        
+
         [HttpPost("instruction-selection")]
         public IActionResult InstructionSelection(InsSelRequestDto req)
         {
             InsSelResponseDto res = _compilationService.InstructionSelection(req);
+            return Ok(res);
+        }
+
+        [HttpPost("register-allocation")]
+        public IActionResult RegisterAllocation(RegAllocRequestDto req)
+        {
+            RegAllocResponseDto res = _compilationService.RegisterAllocation(req);
             return Ok(res);
         }
     }

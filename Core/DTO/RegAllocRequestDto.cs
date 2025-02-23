@@ -5,6 +5,6 @@ namespace Core.DTO
     public class RegAllocRequestDto
     {
         [Required]
-        public string Assembly { get; set; }
+        public List<string> Assembly { get; set; }
     }
 }

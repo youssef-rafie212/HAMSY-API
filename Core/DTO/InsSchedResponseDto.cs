@@ -2,7 +2,7 @@
 {
     public class InsSchedResponseDto
     {
-        public string Assembly { get; set; } = string.Empty;
+        public List<string> Assembly { get; set; } = [];
         public List<string> Errors { get; set; } = [];
     }
 }

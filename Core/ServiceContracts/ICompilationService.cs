@@ -11,7 +11,7 @@ namespace Core.ServiceContracts
         IRGenResponseDto IRGeneration(IRGenRequestDto irGenRequestDto);
         IROptResponseDto IROptimization(IROptRequestDto irOptRequestDto);
         InsSelResponseDto InstructionSelection(InsSelRequestDto insSelRequestDto);
-        RegAllocResponseDto RegisterAllocation(RegAllocResponseDto regAllocResponseDto);
+        RegAllocResponseDto RegisterAllocation(RegAllocRequestDto regAllocRequestDto);
         InsSchedResponseDto InstructionScheduling(InsSchedRequestDto insSchedRequestDto);
     }
 }
