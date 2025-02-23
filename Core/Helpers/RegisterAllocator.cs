@@ -114,12 +114,12 @@ namespace Core.Helpers
                         if (r1.Uses.Count == 0) FreeP(p1);
                         if (r2.Uses.Count == 0) FreeP(p2);
 
-                        PhysicalRegister p3 = Allocate(r3, out bool spilled);
+                        PhysicalRegister p3 = Allocate(r3);
                         Output.Add($"{operation} {p1.ID} , {p2.ID} -> {p3.ID}");
 
                         if (r1.Uses.Count != 0) UpdatePNext(p1);
                         if (r2.Uses.Count != 0) UpdatePNext(p2);
-                        UpdatePNext(p3);
+                        if (r3.Uses.Count != 0) UpdatePNext(p3);
                     }
                     // store r1 -> add
                     else if (inst.StartsWith("store"))
@@ -150,11 +150,11 @@ namespace Core.Helpers
                         VirtualRegister r1 = _vRegisters[r1Name];
 
                         r1.Address = address;
-                        PhysicalRegister p1 = Allocate(r1, out bool spilled);
+                        PhysicalRegister p1 = Allocate(r1);
 
                         Output.Add($"load {address} -> {p1.ID}");
 
-                        UpdatePNext(p1);
+                        if (r1.Uses.Count != 0) UpdatePNext(p1);
                     }
                     // cbr r1 -> L0, L1
                     else if (inst.StartsWith("cbr"))
@@ -203,11 +203,11 @@ namespace Core.Helpers
 
                         VirtualRegister r1 = _vRegisters[r1Name];
 
-                        PhysicalRegister p1 = Allocate(r1, out bool spilled);
+                        PhysicalRegister p1 = Allocate(r1);
 
                         Output.Add($"call {func} -> {p1.ID}");
 
-                        UpdatePNext(p1);
+                        if (r1.Uses.Count != 0) UpdatePNext(p1);
                     }
                     else
                     {
@@ -224,33 +224,34 @@ namespace Core.Helpers
             if (vR.PRegister != null) p = vR.PRegister;
             else
             {
-                p = Allocate(vR, out bool spilled);
+                p = Allocate(vR);
 
-                if (spilled)
+                if (vR.InMemory)
                 {
                     EmitLoad(vR, p);
                 }
+
+                vR.InMemory = false;
             }
 
             return p;
         }
 
-        private PhysicalRegister Allocate(VirtualRegister vR, out bool spilled)
+        private PhysicalRegister Allocate(VirtualRegister vR)
         {
             PhysicalRegister? p = null;
 
             if (_free.Count != 0)
             {
-                spilled = false;
                 p = _pRegisters[_free.First()];
                 _free.Remove(_free.First());
             }
             else
             {
-                spilled = true;
                 p = GetPWithGreatestNext();
                 EmitStore(p);
                 p.VRegister!.PRegister = null;
+                p.VRegister.InMemory = true;
             }
 
             p.NextUse = -1;
@@ -290,7 +291,14 @@ namespace Core.Helpers
 
         private void EmitLoad(VirtualRegister vR, PhysicalRegister pR)
         {
-            Output.Add($"load {vR.Address} -> {pR.ID}");
+            if (int.TryParse(vR.Address, out int _))
+            {
+                Output.Add($"loadI {vR.Address} -> {pR.ID}");
+            }
+            else
+            {
+                Output.Add($"load {vR.Address} -> {pR.ID}");
+            }
         }
 
         private void EmitStore(PhysicalRegister pR)
