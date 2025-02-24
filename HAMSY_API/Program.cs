@@ -1,5 +1,6 @@
 using Core.ServiceContracts;
 using Core.Services;
+using HAMSY_API.Middlewares;
 
 namespace HAMSY_API
 {
@@ -17,8 +18,7 @@ namespace HAMSY_API
 
             var app = builder.Build();
 
-            app.UseAuthorization();
-
+            app.UseMiddleware<GlobalExceptionHandler>();
             app.MapControllers();
 
             app.Run();
