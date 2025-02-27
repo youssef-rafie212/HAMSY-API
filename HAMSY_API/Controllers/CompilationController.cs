@@ -87,5 +87,12 @@ namespace HAMSY_API.Controllers
             RegAllocResponseDto res = _compilationService.RegisterAllocation(req);
             return Ok(res);
         }
+
+        [HttpPost("instruction-scheduling")]
+        public IActionResult RegisterAllocation(InsSchedRequestDto req)
+        {
+            InsSchedResponseDto res = _compilationService.InstructionScheduling(req);
+            return Ok(res);
+        }
     }
 }

@@ -133,7 +133,12 @@ namespace Core.Services
         }
         public InsSchedResponseDto InstructionScheduling(InsSchedRequestDto insSchedRequestDto)
         {
-            throw new NotImplementedException();
+			var response = new InsSchedResponseDto();
+			var scheduler = new Scheduler(insSchedRequestDto.Assembly);
+			var scheduledInstructions = scheduler.GetScheduledCode();
+
+			response.Assembly = scheduledInstructions;
+			return response;
         }
 
         public RegAllocResponseDto RegisterAllocation(RegAllocRequestDto regAllocRequestDto)
