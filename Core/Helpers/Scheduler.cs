@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Enums;
-
-namespace Core.Helpers
+﻿namespace Core.Helpers
 {
 	public class Scheduler
 	{

@@ -19,8 +19,13 @@ namespace HAMSY_API
 
 			var app = builder.Build();
 
+<<<<<<< HEAD
 			app.UseMiddleware<GlobalExceptionMiddleware>();
 			app.MapControllers();
+=======
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.MapControllers();
+>>>>>>> fb63cb68972850e8d2c90598fcc0788c53391f2d
 
 			app.Run();
 		}
