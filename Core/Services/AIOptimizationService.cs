@@ -5,7 +5,7 @@ namespace Core.Services
 {
     public class AIOptimizationService : IAIOptimizationService
     {
-        public SourceOptResponseDto Optimize(SourceOptRequestDto shittyCode)
+        public SourceOptResponseDto Optimize(SourceOptRequestDto sourceOptRequestDto)
         {
             // TODO : Use actual AI
             return new()

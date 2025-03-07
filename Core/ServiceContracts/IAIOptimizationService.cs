@@ -4,6 +4,6 @@ namespace Core.ServiceContracts
 {
     public interface IAIOptimizationService
     {
-        public SourceOptResponseDto Optimize(SourceOptRequestDto shittyCode);
+        public SourceOptResponseDto Optimize(SourceOptRequestDto sourceOptRequestDto);
     }
 }
