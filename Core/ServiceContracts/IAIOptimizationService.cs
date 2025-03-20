@@ -4,6 +4,6 @@ namespace Core.ServiceContracts
 {
     public interface IAIOptimizationService
     {
-        public SourceOptResponseDto Optimize(SourceOptRequestDto sourceOptRequestDto);
+        public Task<SourceOptResponseDto> Optimize(SourceOptRequestDto sourceOptRequestDto, string apiKey);
     }
 }

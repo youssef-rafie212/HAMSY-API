@@ -9,16 +9,23 @@ namespace HAMSY_API.Controllers
     public class AIOptimizationController : ControllerBase
     {
         private readonly IAIOptimizationService _service;
+        private readonly IConfiguration _configuration;
 
-        public AIOptimizationController(IAIOptimizationService service)
+        public AIOptimizationController(IAIOptimizationService service, IConfiguration configuration)
         {
             _service = service;
+            _configuration = configuration;
         }
 
         [HttpPost("[action]")]
-        public IActionResult Optimize(SourceOptRequestDto req)
+        public async Task<IActionResult> Optimize(SourceOptRequestDto req)
         {
-            return Ok(_service.Optimize(req));
+            string? apiKey = _configuration["API_KEY"];
+            if (apiKey == null)
+            {
+                return StatusCode(500);
+            }
+            return Ok(await _service.Optimize(req, apiKey));
         }
     }
 }
