@@ -22,13 +22,13 @@ namespace Core.Services
 
             var requestBody = new
             {
-                model = "gpt-4",
+                model = "gpt-3.5-turbo",
                 messages = new[]
                 {
                 new { role = "system", content = "You are a code optimizer. Your task is to optimize the given code without explaining anything. Just return the optimized code and nothing else." },
                 new { role = "user", content = sourceCode }
             },
-                temperature = 0.2
+                temperature = 0.3
             };
 
             string jsonRequest = JsonSerializer.Serialize(requestBody);
