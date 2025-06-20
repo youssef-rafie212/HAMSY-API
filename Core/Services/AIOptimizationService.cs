@@ -11,7 +11,7 @@ namespace Core.Services
         public async Task<SourceOptResponseDto> Optimize(SourceOptRequestDto sourceOptRequestDto, string apiKey)
         {
             string optimizedCode = await SendRequest(sourceOptRequestDto.SourceCode, apiKey);
-            return new SourceOptResponseDto() { OptimizedCode = optimizedCode };
+            return new SourceOptResponseDto { OptimizedCode = optimizedCode };
         }
 
         private async Task<string> SendRequest(string sourceCode, string apiKey)
@@ -22,12 +22,68 @@ namespace Core.Services
 
             var requestBody = new
             {
-                model = "gpt-3.5-turbo",
+                model = "gpt-4",
                 messages = new[]
                 {
-                new { role = "system", content = "You are a code optimizer. Your task is to optimize the given code without explaining anything. Just return the optimized code and nothing else." },
-                new { role = "user", content = sourceCode }
-            },
+                    new
+                    {
+                        role = "system",
+                        content = """
+You are a code optimizer for a custom programming language.
+Only use the following grammar rules and syntax:
+
+<program> ::= <variableDeclaration>* <functionDefinition>* <mainFunction> EOF
+
+<functionDefinition> ::= "int" <IDENTIFIER> "(" "int" <IDENTIFIER> "," "int" <IDENTIFIER> ")" "{" <statement>* <returnStatement> "}"
+
+<mainFunction> ::= "int" "main" "(" ")" "{" <statement>* <returnStatement> "}"
+
+<returnStatement> ::= "return" <expression> ";"
+
+<statement> ::= <variableDeclaration> 
+              | <assignment> 
+              | <whileLoop> 
+              | <ifStatement>
+
+<variableDeclaration> ::= "int" <IDENTIFIER> "=" <expression> ";"
+
+<assignment> ::= <IDENTIFIER> "=" <expression> ";"
+
+<whileLoop> ::= "while" "(" <condition> ")" "{" <statement>* "}"
+
+<ifStatement> ::= "if" "(" <condition> ")" "{" <statement>* "}" <elseStatement>?
+
+<elseStatement> ::= "else" "{" <statement>* "}"
+
+<expression> ::= <operand>
+              | <operand> <operator> <operand>
+              | <functionCall>
+
+<functionCall> ::= <IDENTIFIER> "(" <expression> "," <expression> ")"
+
+<operand> ::= <IDENTIFIER> | <INT>
+
+<operator> ::= "+" | "-" | "*" | "/" | "%"
+
+<condition> ::= <operand> <comparisonOperator> <operand>
+
+<comparisonOperator> ::= ">" | "<" | ">=" | "<=" | "==" | "!="
+
+(* Terminals *)
+<IDENTIFIER> ::= [a-zA-Z_][a-zA-Z0-9_]*
+<INT> ::= "0" | [1-9][0-9]*
+
+Do not use any constructs not mentioned in the grammar.
+Return only valid optimized code that adheres strictly to this language.
+Do not explain anything. Only output the optimized code.
+"""
+                    },
+                    new
+                    {
+                        role = "user",
+                        content = sourceCode
+                    }
+                },
                 temperature = 0.3
             };
 
@@ -39,7 +95,10 @@ namespace Core.Services
 
             string jsonResponse = await response.Content.ReadAsStringAsync();
             using JsonDocument doc = JsonDocument.Parse(jsonResponse);
-            return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString()?.Trim() ?? "";
+            return doc.RootElement.GetProperty("choices")[0]
+                                  .GetProperty("message")
+                                  .GetProperty("content")
+                                  .GetString()?.Trim() ?? "";
         }
     }
 }
